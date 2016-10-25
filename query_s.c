@@ -28,7 +28,12 @@ int krk_startqueryservice()
     memset(&saddr, 0, sizeof(struct sockaddr_in));
     memset(&krk_qserv_inst, 0, sizeof(krk_query_s));
 
-    tsock = (PF_INET, SOCK_STREAM, IPPROTO_TCP);
+#ifdef _WIN32
+    WSADATA wsaData;
+    WSAStartup(MAKEWORD(2, 2), &wsaData);
+#endif
+
+    tsock = (AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if(tsock < 0 )
         return 1;
 
@@ -36,7 +41,7 @@ int krk_startqueryservice()
     saddr.sin_port = htons(50000);
     saddr.sin_addr.s_addr = INADDR_ANY;
 
-    if(bind(tsock, (struct sockaddr*) &saddr, sizeof(struct sockaddr)) < 0)
+    if(bind(tsock, (struct sockaddr*) &saddr, sizeof(saddr)) < 0)
         return 1;
 
     if(listen(tsock, 40) < 0)
