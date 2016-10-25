@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "engine.h"
 #include "query_s.h"
 

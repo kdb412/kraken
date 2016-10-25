@@ -8,4 +8,6 @@ add_executable(kraken ${SOURCE_FILES})
 
 if (WIN32)
     target_link_libraries(kraken wsock32 ws2_32)
+else()
+    target_link_libraries(kraken pthread pthread)
 endif (WIN32)

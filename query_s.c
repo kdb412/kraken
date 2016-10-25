@@ -3,6 +3,7 @@
 #include "global_types.h"
 #include <pthread.h>
 #include <stdio.h>
+#include <string.h>
 #ifdef _WIN32
 #include <windows.h>
 #include <fcntl.h>
