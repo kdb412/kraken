@@ -5,7 +5,9 @@
 #include <stdio.h>
 #ifdef _WIN32
 #include <windows.h>
+#include <fcntl.h>
 #else
+#include <sys/fcntl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -25,7 +27,7 @@ int krk_startqueryservice()
     memset(&saddr, 0, sizeof(struct sockaddr_in));
     memset(&krk_qserv_inst, 0, sizeof(krk_query_s));
 
-    tsock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    tsock = (PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if(tsock < 0 )
         return 1;
 
@@ -38,6 +40,13 @@ int krk_startqueryservice()
 
     if(listen(tsock, 40) < 0)
         return -1;
+
+#ifndef _WIN32
+    fcntl(tsock, F_SETFL, O_NONBLOCK);
+#else
+    u_long nonblockmode = 1;
+    ioctlsocket(tsock, FIONBIO, &nonblockmode);
+#endif
 
     krk_qserv_inst.list_sock = tsock;
 
