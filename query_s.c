@@ -39,7 +39,7 @@ int krk_startqueryservice()
 
     saddr.sin_family = AF_INET;
     saddr.sin_port = htons(50000);
-    saddr.sin_addr.s_addr = INADDR_ANY;
+    saddr.sin_addr.s_addr = inet_addr("0.0.0.0");
 
     if(bind(tsock, (struct sockaddr*) &saddr, sizeof(saddr)) < 0)
         return 1;
