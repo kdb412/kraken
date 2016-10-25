@@ -1,3 +1,3 @@
 #pragma once
 
-typedef char byte;
+typedef char k_byte;

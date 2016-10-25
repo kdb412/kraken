@@ -1,8 +1,9 @@
-#include <dirent.h>
 #include <stdio.h>
 #include "engine.h"
+#include "query_s.h"
 
 const uint16_t krk_MAX_DB_PATH = 4096;
+krk_db_engine krk_db_inst;
 
 int krk_checkdbpath(char *p)
 {
@@ -12,8 +13,13 @@ int krk_checkdbpath(char *p)
 	{
 		return 1;
 	}
-	closedir(_dbp);
-	return 0;
+
+    // configure the instance object's path
+    memset(&krk_db_inst, 0, sizeof(krk_db_engine));
+	krk_db_inst._dp = _dbp;
+    strncpy(krk_db_inst.dbpath, p, krk_MAX_DB_PATH);
+
+    return 0;
 }
 
 int krk_engineinit(char *p, uint16_t sz)
@@ -32,7 +38,20 @@ int krk_engineinit(char *p, uint16_t sz)
 		return 1;
 	}
 
+
 	fprintf(stdout, "Done\n");
 	fprintf(stderr, "using db path @%s\n", p);
+
+    // start query service
+    krk_startqueryservice();
+
 	return 0;
+}
+
+void krk_enginestop()
+{
+    fprintf(stdout, "stopping  database engine... ");
+    closedir(krk_db_inst._dp);
+    memset(&krk_db_inst, 0, sizeof(krk_db_engine));
+    fprintf(stdout, "done\n");
 }
