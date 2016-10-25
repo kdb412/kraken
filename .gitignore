@@ -31,3 +31,10 @@
 # Debug files
 *.dSYM/
 *.su
+
+# CMake stuff
+CMakeCache.txt
+CMakeFiles/*
+Makefile
+cmake_install.cmake
+kraken
