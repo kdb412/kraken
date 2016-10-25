@@ -33,7 +33,7 @@ int krk_startqueryservice()
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 #endif
 
-    tsock = (AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    tsock = (PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if(tsock < 0 )
         return 1;
 
