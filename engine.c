@@ -29,13 +29,13 @@ int krk_engineinit(char *p, uint16_t sz)
 
 	if(sz > krk_MAX_DB_PATH)
 	{
-		fprintf(stderr, "\nfile path size @%s,[error]\n", p);
+		fprintf(stdout, "\nfile path size @%s,[error]\n", p);
 		return 1;
 	}
 
 	if(krk_checkdbpath(p))
 	{
-		fprintf(stderr, "\ndb path error @%s,[error]\n", p);
+		fprintf(stdout, "\ndb path error @%s,[error]\n", p);
 		return 1;
 	}
 
@@ -46,7 +46,7 @@ int krk_engineinit(char *p, uint16_t sz)
     // start query service
     if(krk_startqueryservice())
     {
-        fprintf(stderr, "attemp to start query service failed\n");
+        fprintf(stdout, "attemp to start query service failed\n");
         return 1;
     }
 
