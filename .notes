@@ -1,0 +1,15 @@
+
+# vim settings
+color murphy
+set tabstop =2
+set softtabstop =2
+set shiftwidth =2
+set expandtab
+set autoindent
+
+# git settings
+[alias]
+	  ls = log --color --graph --pretty=format:'%C(white)%h%Creset -%C(red)%d%Creset %s %C(cyan)(%cr) %C(bold red)<%an>%Creset' --abbrev-commit --
+
+
+
