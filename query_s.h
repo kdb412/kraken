@@ -6,3 +6,4 @@ typedef struct _query_s
 } krk_query_s;
 
 int krk_startqueryservice();
+void * krk_queryservice(void *p);
