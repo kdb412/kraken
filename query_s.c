@@ -12,6 +12,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <stdio.h>
+#include <unistd.h>
+
 #endif
 
 krk_query_s krk_qserv_inst;
@@ -78,6 +81,16 @@ void* krk_queryservice(void *p)
     {
         client_sock = accept(krk_qserv_inst.list_sock,
                              (struct sockaddr *)&client, &client_sz);
+
+		if(client_sock == -1)
+		{
+			usleep(10000);
+			continue;
+		}
+
+		// TODO: send of connected socket to query processor
+		close(client_sock);
+		client_sock = 0;
     }
 
 }
