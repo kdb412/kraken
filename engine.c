@@ -40,7 +40,7 @@ int krk_engineinit(char *p, uint16_t sz)
 	}
 
 
-	fprintf(stdout, "Done\n");
+	fprintf(stdout, "done\n");
 	fprintf(stdout, "using db path @%s\n", p);
 
     // start query service
