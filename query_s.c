@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #ifdef _WIN32
 #include <windows.h>
 #include <fcntl.h>
@@ -71,8 +72,11 @@ int krk_startqueryservice()
 
 void* krk_queryservice(void *p)
 {
+	pthread_t serv;
+	pthread_attr_t attr_t;
     struct sockaddr_in client;
     int client_sock = 0;
+	int *clsock = NULL;
     int client_sz = sizeof(struct sockaddr_in);
 
     fprintf(stdout, "query service started\n");
@@ -88,9 +92,24 @@ void* krk_queryservice(void *p)
 			continue;
 		}
 
-		// TODO: send of connected socket to query processor
+		clsock = (int*)malloc(sizeof(int));
+		*clsock = client_sock;
+		pthread_attr_init(&attr_t);
+		pthread_attr_setdetachstate(&attr_t, PTHREAD_CREATE_DETACHED);
+		pthread_create(&serv, &attr_t, krk_queryproc, clsock);
+		pthread_attr_destroy(&attr_t);
 		close(client_sock);
 		client_sock = 0;
-    }
+	}
 
+}
+
+// TODO: process connection
+void *krk_queryproc(void *p)
+{
+	int *clsock = p;
+
+
+	close(*clsock);
+	free(clsock);
 }

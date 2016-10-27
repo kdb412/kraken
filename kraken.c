@@ -4,6 +4,7 @@
 #include <string.h>
 #include "kraken.h"
 #include "engine.h"
+#include "test.h"
 
 
 k_byte KRK_SIGNAL = '\0';
@@ -30,7 +31,6 @@ void usage() {
 
 void krk_signal(int sig) {
     if (!KRK_SIGNAL) {
-        fprintf(stderr, "caugh signal %d ...\n", sig);
         KRK_SIGNAL = 'm';
     }
 }
@@ -49,6 +49,13 @@ int main(int argc, char **argv) {
     }
 
     krk_signal_configure();
+
+    // run some integrity tests
+    fprintf(stdout, "starting integrity tests\n");
+    if(krk_tst_b64() || krk_tst_sha())
+    {
+        return 1;
+    }
 
     if (krk_engineinit(argv[1], strlen(argv[1])))
         return 1;
