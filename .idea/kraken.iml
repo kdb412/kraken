@@ -5,34 +5,34 @@
       <sourceFolder url="file://$MODULE_DIR$/random.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sha1.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/query_s.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/query_s.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/random.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/kraken.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/b64.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/kraken.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/global_types.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/engine.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/b64.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/engine.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/global_types.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/random.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/query_s.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sha1.c" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="Header Search Paths">
         <CLASSES>
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/5/include" />
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
-          <root url="file:///usr/include" />
-          <root url="file:///usr/local/include" />
+          <root url="file://C:/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/5.1.0/include" />
+          <root url="file://C:/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/5.1.0/include-fixed" />
+          <root url="file://C:/TDM-GCC-64/x86_64-w64-mingw32/include" />
+          <root url="file://C:/TDM-GCC-64/include" />
         </CLASSES>
         <SOURCES>
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/5/include" />
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
-          <root url="file:///usr/include" />
-          <root url="file:///usr/local/include" />
+          <root url="file://C:/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/5.1.0/include" />
+          <root url="file://C:/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/5.1.0/include-fixed" />
+          <root url="file://C:/TDM-GCC-64/x86_64-w64-mingw32/include" />
+          <root url="file://C:/TDM-GCC-64/include" />
         </SOURCES>
       </library>
     </orderEntry>
