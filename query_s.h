@@ -1,5 +1,8 @@
 #pragma once
 
+#include "global_types.h"
+#include <inttypes.h>
+
 typedef struct _query_s
 {
     int list_sock;
@@ -7,4 +10,5 @@ typedef struct _query_s
 
 int krk_startqueryservice();
 void * krk_queryservice(void *p);
-void * krk_queryproc(void *p);
+void * krk_queryrequest_thread(void *p);
+void krk_query_process(kn_block *nbl, int32_t *sock);
