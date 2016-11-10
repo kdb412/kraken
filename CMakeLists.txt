@@ -3,7 +3,7 @@ project(kraken)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -w")
 
-set(SOURCE_FILES kraken.c kraken.h engine.c engine.h global_types.h query_s.c query_s.h b64.c b64.h random.c random.h test.c test.h sha1.c sha1.h)
+set(SOURCE_FILES kraken.c kraken.h engine.c engine.h global_types.h query_s.c query_s.h b64.c b64.h random.c random.h test.c test.h sha1.c sha1.h query_context.h query_context.c)
 add_executable(kraken ${SOURCE_FILES})
 
 if (WIN32)

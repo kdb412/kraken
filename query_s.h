@@ -11,4 +11,4 @@ typedef struct _query_s
 int krk_startqueryservice();
 void * krk_queryservice(void *p);
 void * krk_queryrequest_thread(void *p);
-void krk_query_process(kn_block *nbl, int32_t *sock);
+uint8_t krk_query_process(kn_block *nbl, int32_t *sock);
