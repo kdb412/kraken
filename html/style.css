@@ -9,8 +9,10 @@ body
   font-size: 0.84em;
 }
 
-p { font-family: hackfont; font-size: 0.84em; }
-h1,h2,h3,h4 { font-family: hackfont; font-size: 0.9em; color: #ff0084; }
+p { font-family: hackfont; font-size: 0.84em; line-height: 150%; }
+h1,h2,h3,h4 { font-family: hackfont; font-size: 0.9em; color: #ff0084;
+    letter-spacing: 0.11em;
+}
 
 .topcontainer
 {
@@ -18,16 +20,18 @@ h1,h2,h3,h4 { font-family: hackfont; font-size: 0.9em; color: #ff0084; }
  margin: 0% auto 0% auto;
  padding: 10px;
  min-width: 380px;
+    max-width: 600px;
 }
 
 .contentcontainer
 {
- width: 60%;
- margin: 0% auto 0% auto;
- padding: 10px;
- min-width: 380px;
- border: solid 1px #ccc;
- background: #fcfcfc;
+    width: 60%;
+    margin: 2% auto 2% auto;
+    padding: 10px;
+    min-width: 380px;
+    border: solid 1px #eee;
+     background: #fcfcfc;
+    max-width: 600px;
 
 }
 
