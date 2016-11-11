@@ -17,9 +17,9 @@ for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '
   done
  
 echo -e "\nuint8_t krk_context_parse(uint8_t *user," >> query_context.c
-echo -e "                            uint8_t *context," >> query_context.c
-echo -e "                            uint8_t *data," >> query_context.c
-echo -e "                            uint16_t sz) {\n" >> query_context.c
+echo -e "                          uint8_t *context," >> query_context.c
+echo -e "                          uint8_t *data," >> query_context.c
+echo -e "                          uint16_t sz) {\n" >> query_context.c
 
 for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '{print $1;}')
   do
@@ -43,7 +43,7 @@ for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '
   do
    echo -e "\n#include \"$i.h\"\n" > $i.c
    echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz) {" >> $i.c
-   echo "      return 0;" >> $i.c
+   echo "    return 0;" >> $i.c
    echo -e "}" >> $i.c
   done
 
