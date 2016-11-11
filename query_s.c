@@ -169,7 +169,7 @@ uint8_t krk_query_process(kn_block *nbl, int32_t *sock) {
     // get context
     memcpy(context, &nbl[dataoffset], 8);
 
-	return krk_context_parse(context,
+	return krk_context_parse(user, context,
 					  &nbl[dataoffset+8],
 					  req_s - dataoffset - 8);
 

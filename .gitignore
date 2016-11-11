@@ -38,3 +38,10 @@ CMakeFiles/*
 Makefile
 cmake_install.cmake
 kraken
+
+# specifics to code generation
+CMakeLists.txt
+query_context.c
+k_*.h
+k_*.c
+
