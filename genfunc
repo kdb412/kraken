@@ -25,7 +25,7 @@ for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '
   do
    echo -e "    if(strncmp(context, str($i), 8))"  >> query_context.c
    echo -e "    {" >> query_context.c
-   echo "       $i""_f(user, data, sz);" >> query_context.c
+   echo "       return $i""_f(user, data, sz);" >> query_context.c
    echo -e "    }" >> query_context.c
   done
 echo "}" >> query_context.c
@@ -43,6 +43,7 @@ for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '
   do
    echo -e "\n#include \"$i.h\"\n" > $i.c
    echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz) {" >> $i.c
+   echo "      return 0;" >> $i.c
    echo -e "}" >> $i.c
   done
 
