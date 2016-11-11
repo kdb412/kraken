@@ -1,0 +1,34 @@
+@font-face {
+  font-family: hackfont;
+  src: url(hack.woff);
+}
+
+body
+{
+  font-family: hackfont;
+  font-size: 0.84em;
+}
+
+p { font-family: hackfont; font-size: 0.84em; }
+h1,h2,h3,h4 { font-family: hackfont; font-size: 0.9em; color: #ff0084; }
+
+.topcontainer
+{
+ width: 60%;
+ margin: 0% auto 0% auto;
+ padding: 10px;
+ min-width: 380px;
+}
+
+.contentcontainer
+{
+ width: 60%;
+ margin: 0% auto 0% auto;
+ padding: 10px;
+ min-width: 380px;
+ border: solid 1px #ccc;
+ background: #fcfcfc;
+
+}
+
+
