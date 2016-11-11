@@ -34,14 +34,14 @@ echo "}" >> query_context.c
 for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '{print $1;}')
   do
    echo -e "\n#include \"global_types.h\"" > $i.h
-   echo -e "#include <inttypes.h>" > $i.h
+   echo -e "#include <inttypes.h>\n" > $i.h
    echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz);" >> $i.h
   done
 
 ## Source files for function definition
 for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '{print $1;}')
   do
-   echo -e "\n#include \"$i.h\"" > $i.c
+   echo -e "\n#include \"$i.h\"\n" > $i.c
    echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz) {" >> $i.c
    echo -e "}" >> $i.c
   done
