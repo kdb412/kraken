@@ -34,7 +34,6 @@ echo "}" >> query_context.c
 for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '{print $1;}')
   do
    echo -e "\n#include \"global_types.h\"" > $i.h
-   echo -e "#include <inttypes.h>\n" > $i.h
    echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz);" >> $i.h
   done
 
@@ -43,7 +42,48 @@ for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '
   do
    echo -e "\n#include \"$i.h\"\n" > $i.c
    echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz) {" >> $i.c
-   echo "    return 0;" >> $i.c
+
+   cat >> $i.c << EOF
+
+    uint8_t *tip;
+    uint8_t *end;
+    uint8_t *items[200] = {0};
+    uint16_t sizes[200] = {0};
+
+    uint16_t count = 0;
+
+    tip = data;
+    end = tip;
+
+    while(end < sz)
+    {
+        if(end + sizeof(uint64_t) -1 < sz)
+        {
+            if ( ((uint64_t)*end) == k_sep )
+            {
+                items[count] = (uint8_t*)malloc(end-tip);
+                sizes[count] = end-tip;
+                memcpy(items[count], tip, end-tip);
+
+                count++;
+
+                end = end+sizeof(uint16_t);
+                tip = end;
+            }
+            else
+                end++;
+        }
+        else
+            break;
+    }
+
+    if ( count == 0)
+        return 1;
+
+
+    return 0;
+EOF
+
    echo -e "}" >> $i.c
   done
 

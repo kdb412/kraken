@@ -6,35 +6,30 @@
 const uint16_t krk_MAX_DB_PATH = 4096;
 krk_db_engine krk_db_inst;
 
-int krk_checkdbpath(char *p)
-{
+int krk_checkdbpath(char *p) {
 	DIR *_dbp = opendir(p);
 
-	if(_dbp == NULL)
-	{
+	if (_dbp == NULL) {
 		return 1;
 	}
 
-    // configure the instance object's path
-    memset(&krk_db_inst, 0, sizeof(krk_db_engine));
-	krk_db_inst._dp = _dbp;
-    strncpy(krk_db_inst.dbpath, p, krk_MAX_DB_PATH);
+	// configure the instance object's path
+	memset(&krk_db_inst, 0, sizeof(krk_db_engine));
+	closedir(_dbp);
+	strncpy(krk_db_inst.dbpath, p, krk_MAX_DB_PATH);
 
-    return 0;
+	return 0;
 }
 
-int krk_engineinit(char *p, uint16_t sz)
-{
+int krk_engineinit(char *p, uint16_t sz) {
 	fprintf(stdout, "initializing database engine... ");
 
-	if(sz > krk_MAX_DB_PATH)
-	{
+	if (sz > krk_MAX_DB_PATH) {
 		fprintf(stdout, "\nfile path size @%s,[error]\n", p);
 		return 1;
 	}
 
-	if(krk_checkdbpath(p))
-	{
+	if (krk_checkdbpath(p)) {
 		fprintf(stdout, "\ndb path error @%s,[error]\n", p);
 		return 1;
 	}
@@ -43,20 +38,34 @@ int krk_engineinit(char *p, uint16_t sz)
 	fprintf(stdout, "done\n");
 	fprintf(stdout, "using db path @%s\n", p);
 
-    // start query service
-    if(krk_startqueryservice())
-    {
-        fprintf(stdout, "attemp to start query service failed\n");
-        return 1;
-    }
+	// start query service
+	if (krk_startqueryservice()) {
+		fprintf(stdout, "attemp to start query service failed\n");
+		return 1;
+	}
 
 	return 0;
 }
 
-void krk_enginestop()
-{
-    fprintf(stdout, "stopping  database engine... ");
-    closedir(krk_db_inst._dp);
-    memset(&krk_db_inst, 0, sizeof(krk_db_engine));
-    fprintf(stdout, "done\n");
+void krk_enginestop() {
+	fprintf(stdout, "stopping  database engine... ");
+	if (krk_db_inst._dp != NULL)
+		closedir(krk_db_inst._dp);
+	memset(&krk_db_inst, 0, sizeof(krk_db_engine));
+	fprintf(stdout, "done\n");
+}
+
+int krk_mountdb() {
+	krk_db_inst._dp = opendir(krk_db_inst.dbpath);
+	if (krk_db_inst._dp)
+		return 0;
+	return 1;
+}
+
+int krk_umountdb() {
+	if (krk_db_inst._dp) {
+		closedir(krk_db_inst._dp);
+		krk_db_inst._dp = NULL;
+	}
+	return 0;
 }

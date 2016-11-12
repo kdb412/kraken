@@ -18,3 +18,6 @@ typedef struct _krk_db_engine
 int krk_engineinit(char *p, uint16_t sz);
 int krk_checkdbpath(char *p);
 void krk_enginestop();
+
+int krk_mountdb();
+int krk_umountdb();
