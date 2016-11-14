@@ -3,7 +3,7 @@
 ## Clean generated code
 if [ $# == 1 ];
 then
-  rm k_*.c k_*.h CMakeLists.txt 2>/dev/null
+  rm k_*.c k_*.h query_context.c CMakeLists.txt 2>/dev/null
   exit
 fi
 
