@@ -1,4 +1,6 @@
 #pragma once
 
-unsigned char randbyte();
-unsigned int randint();
+#include "global_types.h"
+
+uchar randbyte();
+uint32_t randint();

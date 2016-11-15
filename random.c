@@ -9,13 +9,13 @@
 #include <process.h>
 #endif
 
-extern const unsigned char krk_b64[64];
+extern const uchar krk_b64[64];
 
-unsigned char randbyte() {
-	unsigned int cntr = 0;
-	static unsigned int seed = 0;
+uchar randbyte() {
+	uint32_t cntr = 0;
+	static uint32_t seed = 0;
 	time_t rawtime;
-	unsigned char timestr[255] =
+	uchar timestr[255] =
 			{0};
 	struct tm *timeinfo;
 
@@ -39,11 +39,11 @@ unsigned char randbyte() {
 	return krk_b64[rand() % 64];
 }
 
-unsigned int randint() {
-	unsigned int cntr = 0;
-	static unsigned int seed = 0;
+uint32_t randint() {
+	uint32_t cntr = 0;
+	static uint32_t seed = 0;
 	time_t rawtime;
-	unsigned char timestr[255] =
+	uchar timestr[255] =
 			{0};
 	struct tm *timeinfo;
 
