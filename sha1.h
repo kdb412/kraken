@@ -1,19 +1,21 @@
 #pragma once
 
+#include <inttypes.h>
+
 typedef struct {
-	unsigned int h0;
-	unsigned int h1;
-	unsigned int h2;
-	unsigned int h3;
-	unsigned int h4;
+	uint32_t h0;
+	uint32_t h1;
+	uint32_t h2;
+	uint32_t h3;
+	uint32_t h4;
 } DIGEST;
 
 typedef struct {
-	unsigned long long int size;
-	unsigned long long int r_len;
+	uint64_t size;
+	uint64_t r_len;
 	DIGEST hash;
 } krk_sha;
 
 void krk_nxtHash(krk_sha *ctx, char *data);
-int krk_initSHA(krk_sha **ctx, unsigned long long int size);
+int32_t krk_initSHA(krk_sha **ctx, uint64_t size);
 void krk_hashStr(krk_sha *ctx, char *hashstr);

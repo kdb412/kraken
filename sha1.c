@@ -4,22 +4,22 @@
 #include <string.h>
 #include <stdio.h>
 
-static unsigned int h0 = 0x67452301;
-static unsigned int h1 = 0xEFCDAB89;
-static unsigned int h2 = 0x98BADCFE;
-static unsigned int h3 = 0x10325476;
-static unsigned int h4 = 0xC3D2E1F0;
+static uint32_t h0 = 0x67452301;
+static uint32_t h1 = 0xEFCDAB89;
+static uint32_t h2 = 0x98BADCFE;
+static uint32_t h3 = 0x10325476;
+static uint32_t h4 = 0xC3D2E1F0;
 
-static const int END_TST = 0x01;
+static const int32_t END_TST = 0x01;
 #define L_ENDIAN() ((*(char*)&END_TST)==1)
 #define LRT(x, y) (((x)<<(y))^((x)>>(32-y)))
 #define REVBYTE32(w){                            \
-    unsigned int tmp = (w);                        \
+    uint32_t tmp = (w);                        \
     tmp = (tmp >> 16) | (tmp << 16);                    \
     (w) = ((tmp & 0xff00ff00UL) >> 8) | ((tmp & 0x00ff00ffUL) << 8);    \
   }
 
-int krk_initSHA(krk_sha **ctx, unsigned long long int size) {
+int32_t krk_initSHA(krk_sha **ctx, uint64_t size) {
 
 	(*ctx) = (krk_sha *) malloc(sizeof(krk_sha));
 	if ((*ctx) == NULL)
@@ -38,16 +38,16 @@ int krk_initSHA(krk_sha **ctx, unsigned long long int size) {
 }
 
 void krk_nxtHash(krk_sha *ctx, char *data) {
-	unsigned int modSize = 0;
+	uint32_t modSize = 0;
 	char *tdata = 0;
 	char *tdata_head = 0;
-	unsigned long long int sizeInBits = 0;
-	unsigned short wCtr = 0;
-	unsigned short mainCtr = 0;
-	unsigned int W[80];
-	unsigned int K = 0x0;
-	unsigned int temp = 0x0;
-	unsigned int a, b, c, d, e, f;
+	uint64_t  sizeInBits = 0;
+	uint16_t wCtr = 0;
+	uint16_t mainCtr = 0;
+	uint32_t W[80];
+	uint32_t K = 0x0;
+	uint32_t temp = 0x0;
+	uint32_t a, b, c, d, e, f;
 	short twoBlockFlag = 0;
 
 	if(ctx->size == 0)
@@ -78,7 +78,7 @@ void krk_nxtHash(krk_sha *ctx, char *data) {
 		ctx->size = (0xFFFFFFFFFFFFFFFFULL / 0x08);
 	}
 
-	sizeInBits = (unsigned long long) ((ctx->size) * 8);
+	sizeInBits = (uint64_t) ((ctx->size) * 8);
 
 	//preprocess now
 	//last data block being read
@@ -114,11 +114,11 @@ void krk_nxtHash(krk_sha *ctx, char *data) {
 	d = ctx->hash.h3;
 	e = ctx->hash.h4;
 
-	memset(&W, 0, sizeof(int) * 80);
+	memset(&W, 0, sizeof(int32_t) * 80);
 	while (wCtr < 15) {
 		wCtr == 0 ?
-		memcpy(&W[wCtr], &tdata[wCtr], sizeof(int)) :
-		memcpy(&W[wCtr], &tdata[(wCtr * 4)], sizeof(int));
+		memcpy(&W[wCtr], &tdata[wCtr], sizeof(int32_t)) :
+		memcpy(&W[wCtr], &tdata[(wCtr * 4)], sizeof(int32_t));
 
 		if ((wCtr != 14)) {
 			if (L_ENDIAN()) REVBYTE32(W[wCtr]);
@@ -136,8 +136,8 @@ void krk_nxtHash(krk_sha *ctx, char *data) {
 					memcpy(&W[wCtr], &sizeInBits, 8);
 				}
 			} else {
-				memcpy(&W[wCtr], &tdata[(wCtr * 4)], sizeof(int));
-				memcpy(&W[wCtr + 1], &tdata[((wCtr + 1) * 4)], sizeof(int));
+				memcpy(&W[wCtr], &tdata[(wCtr * 4)], sizeof(int32_t));
+				memcpy(&W[wCtr + 1], &tdata[((wCtr + 1) * 4)], sizeof(int32_t));
 				if (L_ENDIAN()) {
 					REVBYTE32(W[wCtr]);
 					REVBYTE32(W[wCtr + 1]);
