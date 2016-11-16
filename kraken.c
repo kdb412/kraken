@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "kraken.h"
-#include "engine.h"
+#include "storage_path.h"
 #include "test.h"
 
 
@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    if (krk_engineinit(argv[1], strlen(argv[1])))
+    if (krk_prepstoragepath(argv[1], strlen(argv[1])))
         return 1;
 
     while (!KRK_SIGNAL) {
@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
     }
 
     // stop database engine
-    krk_enginestop();
+    krk_unprepstoragepath();
 
     return 0;
 }

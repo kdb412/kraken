@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <string.h>
-#include "engine.h"
+#include "storage_path.h"
 #include "query_s.h"
 
 const uint16_t krk_MAX_DB_PATH = 4096;
-krk_db_engine krk_db_inst;
+krk_db_path krk_dbpath;
 
 int krk_checkdbpath(char *p) {
 	DIR *_dbp = opendir(p);
@@ -14,15 +14,15 @@ int krk_checkdbpath(char *p) {
 	}
 
 	// configure the instance object's path
-	memset(&krk_db_inst, 0, sizeof(krk_db_engine));
-	closedir(_dbp);
-	strncpy(krk_db_inst.dbpath, p, krk_MAX_DB_PATH);
+	memset(&krk_dbpath, 0, sizeof(krk_db_path));
+	//closedir(_dbp);
+	strncpy(krk_dbpath.dbpath, p, krk_MAX_DB_PATH);
 
 	return 0;
 }
 
-int krk_engineinit(char *p, uint16_t sz) {
-	fprintf(stdout, "initializing database engine... ");
+int krk_prepstoragepath(char *p, uint16_t sz) {
+	fprintf(stdout, "preparing storage path... ");
 
 	if (sz > krk_MAX_DB_PATH) {
 		fprintf(stdout, "\nfile path size @%s,[error]\n", p);
@@ -47,25 +47,11 @@ int krk_engineinit(char *p, uint16_t sz) {
 	return 0;
 }
 
-void krk_enginestop() {
-	fprintf(stdout, "stopping  database engine... ");
-	if (krk_db_inst._dp != NULL)
-		closedir(krk_db_inst._dp);
-	memset(&krk_db_inst, 0, sizeof(krk_db_engine));
+void krk_unprepstoragepath() {
+	fprintf(stdout, "releasing storage path reference... ");
+	if (krk_dbpath._dp != NULL)
+		closedir(krk_dbpath._dp);
+	memset(&krk_dbpath, 0, sizeof(krk_db_path));
 	fprintf(stdout, "done\n");
 }
 
-int krk_mountdb() {
-	krk_db_inst._dp = opendir(krk_db_inst.dbpath);
-	if (krk_db_inst._dp)
-		return 0;
-	return 1;
-}
-
-int krk_umountdb() {
-	if (krk_db_inst._dp) {
-		closedir(krk_db_inst._dp);
-		krk_db_inst._dp = NULL;
-	}
-	return 0;
-}
