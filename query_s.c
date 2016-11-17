@@ -30,6 +30,7 @@ int krk_startqueryservice() {
     struct sockaddr_in saddr;
     pthread_t service_t;
     pthread_attr_t attr_t;
+    uint16_t port_range = 49999;
 
     memset(&saddr, 0, sizeof(saddr));
     memset(&krk_qserv_inst, 0, sizeof(krk_query_s));
@@ -45,10 +46,19 @@ int krk_startqueryservice() {
 
     saddr.sin_family = AF_INET;
     saddr.sin_addr.s_addr = inet_addr("0.0.0.0");
-    saddr.sin_port = htons(50000);
 
-    if (bind(tsock, (struct sockaddr *) &saddr, sizeof(saddr)) == -1)
-        return 1;
+    UPDATE_PORT_RANGE:
+    port_range++;
+    saddr.sin_port = htons(port_range);
+
+    if(port_range > 50010)
+        return -1;
+
+    if (bind(tsock, (struct sockaddr *) &saddr, sizeof(saddr)) == -1 &&
+        port_range < 50010)
+    {
+        goto UPDATE_PORT_RANGE;
+    }
 
     if (listen(tsock, 40) < 0)
         return -1;
@@ -63,6 +73,8 @@ int krk_startqueryservice() {
 #endif
 
     krk_qserv_inst.list_sock = tsock;
+
+    fprintf(stdout, "listening on port: %d\n", port_range);
 
     // create detached listening service
     pthread_attr_init(&attr_t);

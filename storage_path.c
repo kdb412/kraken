@@ -49,6 +49,8 @@ int krk_prepstoragepath(char *p, uint16_t sz) {
 
 void krk_unprepstoragepath() {
 	fprintf(stdout, "releasing storage path reference... ");
+
+	while(krk_dbpath.mounted) {}
 	if (krk_dbpath._dp != NULL)
 	{
 		pthread_mutex_lock(&(krk_dbpath.spl));

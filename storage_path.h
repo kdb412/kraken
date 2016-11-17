@@ -7,8 +7,8 @@
 
 typedef struct _krk_db_path
 {
-	char dbname[50];   // this is determined parsing dbpath
 	char dbpath[4096];
+	uint8_t mounted;
 	pthread_mutex_t spl;
 	DIR *_dp;
 
