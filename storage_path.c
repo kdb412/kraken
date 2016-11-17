@@ -50,7 +50,11 @@ int krk_prepstoragepath(char *p, uint16_t sz) {
 void krk_unprepstoragepath() {
 	fprintf(stdout, "releasing storage path reference... ");
 	if (krk_dbpath._dp != NULL)
+	{
+		pthread_mutex_lock(&(krk_dbpath.spl));
 		closedir(krk_dbpath._dp);
+		pthread_mutex_unlock(&(krk_dbpath.spl));
+	}
 	memset(&krk_dbpath, 0, sizeof(krk_db_path));
 	fprintf(stdout, "done\n");
 }
