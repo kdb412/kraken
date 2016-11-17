@@ -7,43 +7,44 @@ body
 {
   font-family: hackfont;
   font-size: 0.84em;
+  color: #555;
+  text-shadow: 1px 1px 1px #eee;
 }
 
-p { font-family: hackfont; font-size: 0.84em; line-height: 150%; }
-h1,h2,h3,h4 { font-family: hackfont; font-size: 0.9em; color: #ff0084;
+p { font-family: hackfont; font-size: .95em; line-height: 150%; }
+h1,h2,h3,h4 { font-family: hackfont; font-size: 1.0em; color: #000;
+    font-weight: 300;
     letter-spacing: 0.11em;
+    background: #ffeeff;
+    padding: 7px;
+    text-shadow: 1px 1px 1px #ccc;
 }
 
 .topcontainer
 {
- width: 60%;
  margin: 0% auto 0% auto;
  padding: 10px;
- min-width: 380px;
-    max-width: 600px;
+ min-width: 350px;
+ max-width: 680px;
 }
 
 .contentcontainer
 {
-    width: 60%;
-    margin: 2% auto 2% auto;
+    margin: 1% auto 1% auto;
     padding: 10px;
     min-width: 380px;
-    border: solid 1px #eee;
-     background: #fcfcfc;
-    max-width: 600px;
+    max-width: 680px;
 
 }
 
 .news
 {
-    width: 60%;
-    margin: 2% auto 2% auto;
+    margin: 1% auto 2% auto;
     padding: 10px;
     min-width: 380px;
-    border-top: solid 1px #ff0084;
+    max-width: 680px;
     background: #fff;
-    max-width: 600px;
 }
+
 
 
