@@ -12,6 +12,22 @@ typedef struct _krk_rec_meta
 
 } krk_recmeta;
 
+/**
+ * Tables are defined in the base.kr
+ * after the first 30 bytes that identify the database
+ * type, version and name.
+ *
+ * Tables are defined in blocks of 65K
+ * They are formatted as such:
+ *
+ * - random 8byte int that identifies the file that stores
+ * the table data
+ * - 8 byte table id
+ * - 20 bytes for the table name
+ * - 8 bytes column id
+ * - 20 bytes column name
+ * - 4 bytes column type ...
+ */
 typedef struct _krk_table_meta
 {
     krk_recmeta recmeta;
@@ -21,6 +37,21 @@ typedef struct _krk_table_meta
     FILE *tbl_files[200];
 } krk_tablemeta;
 
+
+/**
+ * Database meta data begins in the folder in a file
+ * called base.kr. This file is formatted as such:
+ * dbtypename | dbversion | database name
+ * 10 bytes for the database name
+ * 10 bytes for the database version
+ * 20 bytes for the database name
+ *
+ * ie. KRAKENSQL | 0.1 | testdb
+ *
+ * Following this 30 bytes that identify the database type
+ * are blocks of 65k bytes describing the tables in the database
+ *
+ */
 typedef struct _krk_database_meta
 {
     krk_tablemeta tbls;

@@ -1,8 +1,7 @@
 
 #include "storage_init.h"
 #include "storage_path.h"
-#include <sys/stat.h>
-#include <sys/types.h>
+
 
 extern krk_db_path krk_dbpath;
 krk_databasemeta krk_db;
@@ -58,21 +57,9 @@ uint8_t krk_umountdb(uchar *c) {
 
 
 uint8_t _krk_mountdb(uchar *c) {
-	struct dirent *dt = NULL;
 	char krk_base[4096] = {0};
-	if(krk_dbpath._dp == NULL)
-		return 1;
-
-	do{
-
-		dt = readdir(krk_dbpath._dp);
-		if (!dt)
-			return 1;
-		if(dt->d_type == 0x08 && !strcmp(dt->d_name, "base.kr"))
-			break;
-	} while ( dt != NULL);
-	if(!dt)
-		return 1;
+	if(krk_dbpath.mounted)
+        return 1;
 
 	// mount the database
 	strcpy(krk_base, krk_dbpath.dbpath);

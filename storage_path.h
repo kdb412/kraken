@@ -10,8 +10,6 @@ typedef struct _krk_db_path
 	char dbpath[4096];
 	uint8_t mounted;
 	pthread_mutex_t spl;
-	DIR *_dp;
-
 } krk_db_path;
 
 int krk_prepstoragepath(char *p, uint16_t sz);
