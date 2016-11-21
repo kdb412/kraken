@@ -15,6 +15,7 @@ for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '
   do
    echo -e "#include \"$i.h\"" >> query_context.c
   done
+echo -e "#include <string.h>" >> query_context.c
  
 echo -e "\nuint8_t krk_context_parse(uint8_t *user," >> query_context.c
 echo -e "                          uint8_t *context," >> query_context.c
@@ -40,7 +41,11 @@ for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '
 ## Source files for function definition
 for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '{print $1;}')
   do
-   echo -e "\n#include \"$i.h\"\n" > $i.c
+   echo -e "\n#include \"$i.h\"" > $i.c
+   echo -e "#include \"q_processor.h\"" >> $i.c
+   echo -e "#include <string.h>" >> $i.c
+   echo -e "#include <stdlib.h>\n\n" >> $i.c
+
    echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz) {" >> $i.c
 
    cat >> $i.c << EOF
