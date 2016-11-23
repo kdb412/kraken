@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 
     // run some integrity tests
     fprintf(stdout, "starting integrity tests\n");
-    if(krk_tst_b64() || krk_tst_sha())
+    if(krk_tst_b64() || krk_tst_sha() || krk_encryption_test())
     {
         return 1;
     }
