@@ -1,4 +1,5 @@
 
+#include <stdlib.h>
 #include "storage_init.h"
 #include "storage_path.h"
 
@@ -57,11 +58,12 @@ uint8_t krk_umountdb(uchar *c) {
 
 
 uint8_t _krk_mountdb(uchar *c) {
+#define krk_tbl_block_sz 65000
     char krk_base[4096] = {0};
     char krk_header[30] = {0};
-    char krk_tblinfo[65000] = {0};
+    char krk_tblinfo[krk_tbl_block_sz] = {0};
 
-    uint32_t bytes_read = 0;
+    uint64_t bytes_read = 0;
 
     if (krk_dbpath.mounted)
         return 1;
@@ -85,10 +87,30 @@ uint8_t _krk_mountdb(uchar *c) {
         return 1;
     }
 
-    bytes_read = fread(krk_tblinfo, 1, 65000, krk_db.db_file);
-    while(bytes_read == 65000)
+    uint32_t counter = 0;
+    bytes_read = fread(krk_tblinfo, 1, krk_tbl_block_sz, krk_db.db_file);
+    while(bytes_read == krk_tbl_block_sz && counter < 200)
     {
+        krk_db.tbls.tableid[counter] = (uint64_t)(*krk_tblinfo);
+        krk_db.tbls.tablenm[counter] = malloc(strnlen(&krk_tblinfo[8],20));
+        strncpy(krk_db.tbls.tablenm[counter],&krk_tblinfo[8],
+                strnlen(&krk_tblinfo[8],20 ));
 
+        // load column definitions
+        uint32_t column_counter = 0;
+        uint64_t _t_id = 0;
+        uint32_t _offset = 28; //tableid + tablenm
+        while(column_counter < 200)
+        {
+            _t_id = *((uint64_t *)&(krk_tblinfo[_offset]));
+            if(_t_id == 0)
+                break;
+
+
+
+        }
+
+        counter++;
     }
 
 
