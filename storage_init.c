@@ -89,31 +89,58 @@ uint8_t _krk_mountdb(uchar *c) {
 
     uint32_t counter = 0;
     bytes_read = fread(krk_tblinfo, 1, krk_tbl_block_sz, krk_db.db_file);
-    while(bytes_read == krk_tbl_block_sz && counter < 200)
-    {
-        krk_db.tbls.tableid[counter] = (uint64_t)(*krk_tblinfo);
-        krk_db.tbls.tablenm[counter] = malloc(strnlen(&krk_tblinfo[8],20));
-        strncpy(krk_db.tbls.tablenm[counter],&krk_tblinfo[8],
-                strnlen(&krk_tblinfo[8],20 ));
+    while (bytes_read == krk_tbl_block_sz && counter < 200) {
+
+        // get table info
+        krk_db.tbls.tableid[counter] = (uint64_t) (*krk_tblinfo);
+        krk_db.tbls.tablenm[counter] = malloc(strnlen(&krk_tblinfo[8], 20));
+        strncpy(krk_db.tbls.tablenm[counter], &krk_tblinfo[8],
+                strnlen(&krk_tblinfo[8], 20));
+
+        // open table file
+        char tableFile[30] = {0};
+        sprintf(tableFile, "%020llu", krk_db.tbls.tableid[counter]);
+        krk_db.tbls.tbl_files[counter] = fopen(tableFile, "ab+");
+        if(!krk_db.tbls.tbl_files[counter])
+        {
+            //TODO: undo allocation and existing parsing
+            _krk_umountdb(c);
+            return 1;
+        }
 
         // load column definitions
         uint32_t column_counter = 0;
-        uint64_t _t_id = 0;
+        uint64_t _c_id = 0;
         uint32_t _offset = 28; //tableid + tablenm
-        while(column_counter < 200)
-        {
-            _t_id = *((uint64_t *)&(krk_tblinfo[_offset]));
-            if(_t_id == 0)
+        while (column_counter < 200 && _offset < krk_tbl_block_sz) {
+
+            // column id
+            _c_id = *((uint64_t *) &(krk_tblinfo[_offset]));
+            if (_c_id == 0)
                 break;
+            krk_db.tbls.recmeta.tid_clinkid[counter][column_counter] = _c_id;
 
+            // column name
+            _offset += 8;
+            krk_db.tbls.recmeta.cn[counter][column_counter] =
+                    malloc(strnlen(&krk_tblinfo[_offset], 20));
 
+            strncpy(
+                    krk_db.tbls.recmeta.cn[counter][column_counter],
+                    &krk_tblinfo[_offset],
+                    strnlen(&krk_tblinfo[_offset], 20));
 
+            // column type
+            _offset += 20;
+            krk_db.tbls.recmeta.ct[counter][column_counter] =
+                    *((uint32_t *) &(krk_tblinfo[_offset]));
+
+            _offset += 4;
+            column_counter++;
         }
 
         counter++;
     }
-
-
 
     return 0;
 }
