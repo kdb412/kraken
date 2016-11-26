@@ -65,7 +65,7 @@ uint8_t _krk_mountdb(uchar *c) {
 
     uint64_t bytes_read = 0;
 
-    if (krk_dbpath.mounted)
+    if (krk_dbpath.mounted || strlen(c) > 20)
         return 1;
 
     // mount the database
@@ -76,16 +76,22 @@ uint8_t _krk_mountdb(uchar *c) {
     if (!krk_db.db_file)
         return 1;
 
+    krk_dbpath.mounted = 1;
+
     // read the base.kr file
     fread(krk_header, 1, 30, krk_db.db_file);
 
     // validate header and database name
     if (strncmp(krk_header, "KRAKENSQL", strlen("KRAKENSQL")) ||
         strncmp(&krk_header[10], "0.1", strlen("0.1")) ||
-        strncmp(&krk_header[20], c, strlen(c))) {
+        strncmp(&krk_header[20], c, 20)) {
         fclose(krk_db.db_file);
         return 1;
     }
+
+    //set db name
+    krk_db.dbname = malloc(strlen(c) + 1);
+    strcpy(krk_db.dbname, c);
 
     uint32_t counter = 0;
     bytes_read = fread(krk_tblinfo, 1, krk_tbl_block_sz, krk_db.db_file);
@@ -101,9 +107,8 @@ uint8_t _krk_mountdb(uchar *c) {
         char tableFile[30] = {0};
         sprintf(tableFile, "%020llu", krk_db.tbls.tableid[counter]);
         krk_db.tbls.tbl_files[counter] = fopen(tableFile, "ab+");
-        if(!krk_db.tbls.tbl_files[counter])
-        {
-            //TODO: undo allocation and existing parsing
+        if (!krk_db.tbls.tbl_files[counter]) {
+            //TODO: undo allocation of existing parsing
             _krk_umountdb(c);
             return 1;
         }
@@ -146,9 +151,64 @@ uint8_t _krk_mountdb(uchar *c) {
 }
 
 uint8_t _krk_umountdb(uchar *c) {
+
+    if (strncmp(krk_db.dbname, c, 20) || krk_dbpath.mounted)
+        return 1;
+
+    // clear record meta data
+    for (int i = 0; i < 200; i++) {
+        for (int j = 0; j < 200; j++) {
+            if (krk_db.tbls.recmeta.cn[i][j]) {
+                free(krk_db.tbls.recmeta.cn[i][j]);
+                krk_db.tbls.recmeta.cn[i][j] = 0;
+            }
+        }
+    }
+    memset(&krk_db.tbls.recmeta.tid_clinkid, 0,
+           sizeof(krk_db.tbls.recmeta.tid_clinkid));
+    memset(&krk_db.tbls.recmeta.ct, 0,
+           sizeof(krk_db.tbls.recmeta.ct));
+
+    // clear table meta data and close table files
+    for (int i = 0; i < 200; i++) {
+        if (krk_db.tbls.tbl_files) {
+            krk_db.tbls.tableid[i] = 0;
+            free(krk_db.tbls.tablenm[i]);
+            krk_db.tbls.tablenm[i] = 0;
+            fclose(krk_db.tbls.tbl_files[i]);
+            krk_db.tbls.tbl_files[i] = 0;
+        }
+    }
+
+    // close db file
+    if (krk_db.db_file) {
+        fclose(krk_db.db_file);
+        krk_db.db_file = 0;
+        free(krk_db.dbname);
+        krk_db.dbname = 0;
+    }
+
+    krk_dbpath.mounted = 0;
     return 0;
 }
 
 uint8_t _krk_createdb(uchar *c) {
+    char krk_base[4096] = {0};
+    char krk_header[30] = {0};
+    char krk_tblinfo[krk_tbl_block_sz] = {0};
+
+    uint64_t bytes_read = 0;
+
+    if (krk_dbpath.mounted || strlen(c) > 20)
+        return 1;
+
+    // mount the database
+    memset(&krk_db, 0, sizeof(krk_base));
+    strcpy(krk_base, krk_dbpath.dbpath);
+    strcat(krk_base, "/base.kr");
+    krk_db.db_file = fopen(krk_base, "rb");
+    if (!krk_db.db_file)
+        return 1;
+
     return 0;
 }

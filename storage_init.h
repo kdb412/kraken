@@ -59,6 +59,7 @@ typedef struct _krk_database_meta
     FILE *db_file;
     FILE *tx_log;
     krk_db_path *krk_path;
+    char *dbname;
 } krk_databasemeta;
 
 uint8_t krk_createdb(uchar *c);
