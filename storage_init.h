@@ -4,6 +4,10 @@
 #include "storage_path.h"
 #include <stdio.h>
 
+#define KRAKEN_ID "KRAKENSQL"
+#define KRAKEN_VER "0.1"
+
+
 typedef struct _krk_rec_meta
 {
     uint64_t tid_clinkid [200][200];
@@ -48,7 +52,7 @@ typedef struct _krk_table_meta
  *
  * ie. KRAKENSQL | 0.1 | testdb
  *
- * Following this 30 bytes that identify the database type
+ * Following this 40 bytes that identify the database type
  * are blocks of 65k bytes describing the tables in the database
  *
  */
@@ -63,5 +67,6 @@ typedef struct _krk_database_meta
 } krk_databasemeta;
 
 uint8_t krk_createdb(uchar *c);
+uint8_t krk_createtable(uchar *c);
 uint8_t krk_mountdb(uchar *c);
 uint8_t krk_umountdb(uchar *c);
