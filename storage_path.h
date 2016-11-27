@@ -12,6 +12,6 @@ typedef struct _krk_db_path
 	pthread_mutex_t spl;
 } krk_db_path;
 
-int krk_prepstoragepath(char *p, uint16_t sz);
-int krk_checkdbpath(char *p);
-void krk_unprepstoragepath();
+int krk_checkstoragepath(char *p, uint16_t sz);
+int _krk_checkdbpath(char *p);
+

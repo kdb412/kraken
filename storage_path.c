@@ -6,7 +6,7 @@
 const uint16_t krk_MAX_DB_PATH = 4096;
 krk_db_path krk_dbpath;
 
-int krk_checkdbpath(char *p) {
+int _krk_checkdbpath(char *p) {
     DIR *_dbp = opendir(p);
 
     if (_dbp == NULL) {
@@ -21,7 +21,7 @@ int krk_checkdbpath(char *p) {
     return 0;
 }
 
-int krk_prepstoragepath(char *p, uint16_t sz) {
+int krk_checkstoragepath(char *p, uint16_t sz) {
     fprintf(stdout, "preparing storage path... ");
 
     if (sz > krk_MAX_DB_PATH) {
@@ -29,7 +29,7 @@ int krk_prepstoragepath(char *p, uint16_t sz) {
         return 1;
     }
 
-    if (krk_checkdbpath(p)) {
+    if (_krk_checkdbpath(p)) {
         fprintf(stderr, "\ndb path error @%s,[error]\n", p);
         return 1;
     }
@@ -47,12 +47,4 @@ int krk_prepstoragepath(char *p, uint16_t sz) {
     return 0;
 }
 
-void krk_unprepstoragepath() {
-    fprintf(stdout, "releasing storage path reference... ");
-
-    if (krk_dbpath.mounted) {}
-    memset(&krk_dbpath, 0, sizeof(krk_db_path));
-
-    fprintf(stdout, "done\n");
-}
 

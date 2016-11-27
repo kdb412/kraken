@@ -6,7 +6,7 @@
 #include "storage_path.h"
 #include "test.h"
 
-
+extern krk_db_path krk_dbpath;
 k_byte KRK_SIGNAL = '\0';
 
 void usage() {
@@ -30,16 +30,26 @@ void usage() {
 }
 
 void krk_signal(int sig) {
-    if (!KRK_SIGNAL) {
+    if (!KRK_SIGNAL && !krk_dbpath.mounted) {
         KRK_SIGNAL = 'm';
     }
 }
 
 void krk_signal_configure() {
+
     signal(SIGINT, krk_signal);
+    signal(SIGABRT_COMPAT, krk_signal);
+    signal(SIGFPE, krk_signal);
     signal(SIGABRT, krk_signal);
     signal(SIGTERM, krk_signal);
-    signal(SIGSEGV, krk_signal);
+#ifdef POSIX
+    signal(SIGPIPE, krk_signal);
+    signal(SIGTRAP, krk_signal);
+    signal(SIGQUIT, krk_signal);
+    signal(SIGHUP, krk_signal);
+    signal(SIGALRM, krk_signal);
+#endif
+
 }
 
 int main(int argc, char **argv) {
@@ -57,15 +67,13 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    if (krk_prepstoragepath(argv[1], strlen(argv[1])))
+    if (krk_checkstoragepath(argv[1], strlen(argv[1])))
         return 1;
 
     while (!KRK_SIGNAL) {
         sleep(1);
     }
 
-    // stop database engine
-    krk_unprepstoragepath();
 
     return 0;
 }
