@@ -45,3 +45,6 @@ query_context.c
 k_*.h
 k_*.c
 
+# editor files
+*~
+\#*
