@@ -14,3 +14,10 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Hack" :foundry "outline" :slant normal :weight normal :height 83 :width normal)))))
 (load-file "~/flatui-theme.el")
+(defun compile-tags ()
+  "compile etags for the current project"
+  (interactive)
+  (cd "~/kraken")
+  (compile "etags -R *.c *.h"))
+
+(setq default-directory "c:/users/gandalf/Desktop/kraken/")

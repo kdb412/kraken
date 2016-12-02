@@ -48,3 +48,4 @@ k_*.c
 # editor files
 *~
 \#*
+TAGS
