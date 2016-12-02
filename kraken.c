@@ -38,7 +38,6 @@ void krk_signal(int sig) {
 void krk_signal_configure() {
 
   signal(SIGINT, krk_signal);
-  signal(SIGABRT_COMPAT, krk_signal);
   signal(SIGFPE, krk_signal);
   signal(SIGABRT, krk_signal);
   signal(SIGTERM, krk_signal);
