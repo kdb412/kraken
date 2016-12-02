@@ -67,6 +67,6 @@ typedef struct _krk_database_meta
 } krk_databasemeta;
 
 uint8_t krk_createdb(uchar *c);
-uint8_t krk_createtable(uchar *c);
+uint8_t krk_createtb(uchar *c);
 uint8_t krk_mountdb(uchar *c);
 uint8_t krk_umountdb(uchar *c);

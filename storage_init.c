@@ -9,10 +9,9 @@ krk_databasemeta krk_db;
 
 // forward declarations of internal function
 uint8_t _krk_mountdb(uchar *c);
-
 uint8_t _krk_umountdb(uchar *c);
-
 uint8_t _krk_createdb(uchar *c);
+uint8_t _krk_createtb(uchar *c);
 
 uint8_t krk_mountdb(uchar *c) {
 
@@ -56,6 +55,20 @@ uint8_t krk_umountdb(uchar *c) {
   return (uint8_t) (krk_dbpath.mounted ? 1 : 0);
 }
 
+uint8_t krk_createtb(uchar *c)
+{
+  uint8_t ret = 1;
+  pthread_mutex_lock(&(krk_dbpath.spl));
+  if (krk_dbpath.mounted == 1) {
+    ret = _krk_createtb(c);
+  } else {
+    pthread_mutex_unlock(&(krk_dbpath.spl));
+    return ret;
+  }
+  pthread_mutex_unlock(&(krk_dbpath.spl));
+
+  return ret;
+}
 
 uint8_t _krk_mountdb(uchar *c) {
 #define krk_tbl_block_sz 65000
@@ -235,5 +248,11 @@ uint8_t _krk_createdb(uchar *c) {
     }
   fclose(krk_db.db_file);
 
+  return 0;
+}
+
+uint8_t _krk_createtb(uchar *c)
+{
+  
   return 0;
 }
