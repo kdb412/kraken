@@ -3,52 +3,52 @@
 ## Clean generated code
 if [ $# == 1 ];
 then
-  rm k_*.c k_*.h query_context.c CMakeLists.txt 2>/dev/null
-  exit
+    rm k_*.c k_*.h query_context.c CMakeLists.txt 2>/dev/null
+    exit
 fi
 
 ## Code generation for context queries
 echo -e "\n#include \"query_context.h\"" > query_context.c
 echo -e "#include \"global_types.h\"" >> query_context.c
 
-for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '{print $1;}')
-  do
-   echo -e "#include \"$i.h\"" >> query_context.c
-  done
+for i in $(egrep '^\s+k_' query_context.h | sed 's/^\s+//g' | sed 's/,//g' | awk '{print $1;}')
+do
+    echo -e "#include \"$i.h\"" >> query_context.c
+done
 echo -e "#include <string.h>" >> query_context.c
- 
+
 echo -e "\nuint8_t krk_context_parse(uint8_t *user," >> query_context.c
 echo -e "                          uint8_t *context," >> query_context.c
 echo -e "                          uint8_t *data," >> query_context.c
 echo -e "                          uint16_t sz) {\n" >> query_context.c
 
-for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '{print $1;}')
-  do
-   echo -e "    if(strncmp(context, str($i), 8))"  >> query_context.c
-   echo -e "    {" >> query_context.c
-   echo "       return $i""_f(user, data, sz);" >> query_context.c
-   echo -e "    }" >> query_context.c
-  done
+for i in $(egrep '^\s+k_' query_context.h | sed 's/^\s+//g' | sed 's/,//g' | awk '{print $1;}')
+do
+    echo -e "    if(strncmp(context, str($i), 8))"  >> query_context.c
+    echo -e "    {" >> query_context.c
+    echo "       return $i""_f(user, data, sz);" >> query_context.c
+    echo -e "    }" >> query_context.c
+done
 echo "}" >> query_context.c
 
 ## Header files for function definition
-for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '{print $1;}')
-  do
-   echo -e "\n#include \"global_types.h\"" > $i.h
-   echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz);" >> $i.h
-  done
+for i in $(egrep '^\s+k_' query_context.h | sed 's/^\s+//g' | sed 's/,//g' | awk '{print $1;}')
+do
+    echo -e "\n#include \"global_types.h\"" > $i.h
+    echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz);" >> $i.h
+done
 
 ## Source files for function definition
-for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '{print $1;}')
-  do
-   echo -e "\n#include \"$i.h\"" > $i.c
-   echo -e "#include \"q_processor.h\"" >> $i.c
-   echo -e "#include <string.h>" >> $i.c
-   echo -e "#include <stdlib.h>\n\n" >> $i.c
+for i in $(egrep '^\s+k_' query_context.h | sed 's/^\s+//g' | sed 's/,//g' | awk '{print $1;}')
+do
+    echo -e "\n#include \"$i.h\"" > $i.c
+    echo -e "#include \"q_processor.h\"" >> $i.c
+    echo -e "#include <string.h>" >> $i.c
+    echo -e "#include <stdlib.h>\n\n" >> $i.c
 
-   echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz) {" >> $i.c
+    echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz) {" >> $i.c
 
-   cat >> $i.c << EOF
+    cat >> $i.c << EOF
 
     uint8_t *tip;
     uint8_t *end;
@@ -87,9 +87,9 @@ for i in $(egrep '^\sk_' query_context.h | sed 's/^\s//g' | sed 's/,//g' | awk '
 
 EOF
 
-echo "    return q_processor(\"$i\", items, sizes);" >> $i.c
-   echo -e "}" >> $i.c
-  done
+    echo "    return q_processor(\"$i\", items, sizes);" >> $i.c
+    echo -e "}" >> $i.c
+done
 
 ## CMakeLists.txt generation
 echo "cmake_minimum_required(VERSION 3.6)" > CMakeLists.txt
@@ -99,9 +99,9 @@ echo -e "\nset(CMAKE_C_FLAGS \"\${CMAKE_C_FLAGS} -std=c11 -w\")" >> CMakeLists.t
 
 SOURCE="set(SOURCE_FILES "
 for i in $(ls *.c *.h)
-  do
-   SOURCE="$SOURCE $i" 
-  done
+do
+    SOURCE="$SOURCE $i" 
+done
 SOURCE="$SOURCE )"
 
 echo -e "\n$SOURCE" >> CMakeLists.txt
