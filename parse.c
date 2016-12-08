@@ -2,6 +2,7 @@
 
 void krk_sstrip_extra_spaces(char *s)
 {
+  uint8_t disable = 0;
   char *tip = s;
   char s_tmp[strlen(s)+1];
 
@@ -9,11 +10,14 @@ void krk_sstrip_extra_spaces(char *s)
 
   while(tip != '\0' && tip+1 != '\0')
     {
-      if(tip == ' ' && tip+1 != ' ')
+      if(tip == '"' || tip == '\'')
+	disable = !disable;
+      
+      if(tip == ' ' && tip+1 != ' ' && !disable)
 	{
 	  strncat(s_tmp, tip, 1);
 	}
-      else if( tip == ' ')
+      else if( tip == ' ' && !disable)
 	{
 	  tip++;
 	}
