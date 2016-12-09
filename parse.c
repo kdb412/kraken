@@ -13,16 +13,20 @@ void krk_sstrip_extra_spaces(char *s)
       if(tip == '"' || tip == '\'')
 	disable = !disable;
       
-      if(tip == ' ' && tip+1 != ' ' && !disable)
+      if(tip == ' ' && tip+1 == ' ' && disable)
 	{
 	  strncat(s_tmp, tip, 1);
+	  tip++;
 	}
-      else if( tip == ' ' && !disable)
+      else if( tip == ' ' && tip+1 == ' ' && !disable)
 	{
 	  tip++;
 	}
       else
+	{
 	strncat(s_tmp, tip, 1);
+	tip++;
+	}
 	  
     }
   strcpy(s, s_tmp);
