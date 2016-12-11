@@ -10,9 +10,10 @@ body
     padding: 12px;
     max-width: 780px;
     margin: 3% auto 3% auto;
+    background: #fff;
 }
 
-.container { background: #eee; clear: both; display: table;
+.container { background: #f6f6f6; clear: both; display: table;
 	     box-shadow: 0px 0px 1px 1px #ccc;
 	   }
 
@@ -33,22 +34,24 @@ h1,h2,h3,h4 { font-family: kraken; color: #000;
 {
     margin: 0% auto 0% auto;
     padding-left: 10px;
-    background: #fff;
+    background: #ffffe0;
     border-bottom: 1px solid #ccc;
+    
 }
 
 .blogcontainer
 {
     margin: 0% auto 0% auto;
     padding: 10px 30px 10px 30px;
-    background: #fff;
-    border-top: 1px solid #ccc;
+    background: #efefef;
+    border-bottom: 1px solid #ccc;
 }
 
 .contentcontainer
 {
     margin: 0% auto 0% auto;
     padding: 0 30px 0 30px;
+    border-bottom: 1px solid #ccc;
 }
 
 .news
