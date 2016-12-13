@@ -4,5 +4,5 @@
 #include "storage_path.h"
 #include <stdio.h>
 
-void runTests();
-uint8_t testDbCreate();
+void runDBTests();
+

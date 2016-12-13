@@ -25,7 +25,6 @@ uint8_t krk_mountdb(uchar *c) {
     return 1;
   }
   pthread_mutex_unlock(&(krk_dbpath.spl));
-
   return (uint8_t) (krk_dbpath.mounted ? 0 : 1);
 }
 
@@ -164,7 +163,7 @@ uint8_t _krk_mountdb(uchar *c) {
 
 uint8_t _krk_umountdb(uchar *c) {
 
-  if (strncmp(krk_db.dbname, c, 20) >= 20 || krk_dbpath.mounted)
+  if (strnlen(c, 20) > 20 || strncmp(krk_db.dbname, c, 20) || !krk_dbpath.mounted)
     return 1;
 
   // clear record meta data
@@ -241,13 +240,12 @@ uint8_t _krk_createdb(uchar *c) {
   strcpy(&krk_header[20], c);
 
   size_t ret = fwrite(krk_header, 1, 40, krk_db.db_file);
-  if(ret != 30)
+  if(ret != 40)
     {
       fclose(krk_db.db_file);
       return 1;
     }
   fclose(krk_db.db_file);
-
   return 0;
 }
 

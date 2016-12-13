@@ -5,6 +5,7 @@
 #include "kraken.h"
 #include "storage_path.h"
 #include "test.h"
+#include "testdb.h"
 
 extern krk_db_path krk_dbpath;
 k_byte KRK_SIGNAL = '\0';
@@ -69,6 +70,9 @@ int main(int argc, char **argv) {
   if (krk_checkstoragepath(argv[1], strlen(argv[1])))
     return 1;
 
+  // test db functions
+  runDBTests();
+  
   while (!KRK_SIGNAL) {
     sleep(1);
   }
