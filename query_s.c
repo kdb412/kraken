@@ -25,7 +25,8 @@
 krk_query_s krk_qserv_inst;
 extern k_byte KRK_SIGNAL;
 
-int krk_startqueryservice() {
+int krk_startqueryservice()
+{
   int tsock = 0;
   struct sockaddr_in saddr;
   pthread_t service_t;
@@ -47,18 +48,18 @@ int krk_startqueryservice() {
   saddr.sin_family = AF_INET;
   saddr.sin_addr.s_addr = inet_addr("0.0.0.0");
 
- UPDATE_PORT_RANGE:
+UPDATE_PORT_RANGE:
   port_range++;
   saddr.sin_port = htons(port_range);
 
-  if(port_range > 50010)
+  if (port_range > 50010)
     return -1;
 
-  if (bind(tsock, (struct sockaddr *) &saddr, sizeof(saddr)) == -1 &&
+  if (bind(tsock, (struct sockaddr *)&saddr, sizeof(saddr)) == -1 &&
       port_range < 50010)
-    {
-      goto UPDATE_PORT_RANGE;
-    }
+  {
+    goto UPDATE_PORT_RANGE;
+  }
 
   if (listen(tsock, 40) < 0)
     return -1;
@@ -85,7 +86,8 @@ int krk_startqueryservice() {
   return 0;
 }
 
-void *krk_queryservice(void *p) {
+void *krk_queryservice(void *p)
+{
   pthread_t serv;
   pthread_attr_t attr_t;
   struct sockaddr_in client;
@@ -95,16 +97,18 @@ void *krk_queryservice(void *p) {
 
   fprintf(stdout, "query service started\n");
 
-  while (!KRK_SIGNAL) {
+  while (!KRK_SIGNAL)
+  {
     client_sock = accept(krk_qserv_inst.list_sock,
-			 (struct sockaddr *) &client, &client_sz);
+                         (struct sockaddr *)&client, &client_sz);
 
-    if (client_sock == -1) {
+    if (client_sock == -1)
+    {
       usleep(10000);
       continue;
     }
 
-    clsock = (int *) malloc(sizeof(int));
+    clsock = (int *)malloc(sizeof(int));
     *clsock = client_sock;
     pthread_attr_init(&attr_t);
     pthread_attr_setdetachstate(&attr_t, PTHREAD_CREATE_DETACHED);
@@ -112,11 +116,10 @@ void *krk_queryservice(void *p) {
     pthread_attr_destroy(&attr_t);
     client_sock = 0;
   }
-
 }
 
-
-void *krk_queryrequest_thread(void *p) {
+void *krk_queryrequest_thread(void *p)
+{
   const static uint8_t BSZ = 4096;
   int32_t *clsock = p;
   uint16_t req_t = 0;
@@ -125,33 +128,40 @@ void *krk_queryrequest_thread(void *p) {
   uint8_t req_start = 1;
   kn_block *nblock = malloc(sizeof(kn_block));
 
-  for (;;) {
+  for (;;)
+  {
     if (req_s == 0)
       req_r = recv(*clsock, nblock, BSZ, 0);
     else
       req_r = recv(*clsock, &nblock[req_s - req_t], req_s - req_t, 0);
 
-    if (req_r > 0) {
+    if (req_r > 0)
+    {
       req_t += req_r;
 
-      if (req_t == req_s) {
-	if( krk_query_process(nblock, clsock) )
-	  break;
-
-	// reset counters after processing
-	req_t = 0;
-	req_s = 0;
-	req_r = 0;
-	req_start = 1;
-      } else if (req_start == 1 && req_t > sizeof(uint8_t)) {
-	memcpy(&req_s, nblock, sizeof(uint8_t));
-	req_start = 0;
-      }
-
-    } else if (req_r < 0) // socket closed
+      if (req_t == req_s)
       {
-	break;
-      } else {
+        if (krk_query_process(nblock, clsock))
+          break;
+
+        // reset counters after processing
+        req_t = 0;
+        req_s = 0;
+        req_r = 0;
+        req_start = 1;
+      }
+      else if (req_start == 1 && req_t > sizeof(uint8_t))
+      {
+        memcpy(&req_s, nblock, sizeof(uint8_t));
+        req_start = 0;
+      }
+    }
+    else if (req_r < 0) // socket closed
+    {
+      break;
+    }
+    else
+    {
       usleep(10000);
       continue;
     }
@@ -163,7 +173,8 @@ void *krk_queryrequest_thread(void *p) {
 }
 
 // TODO: process request
-uint8_t krk_query_process(kn_block *nbl, int32_t *sock) {
+uint8_t krk_query_process(kn_block *nbl, int32_t *sock)
+{
   uint16_t req_s = 0;
   uint8_t user[9] = {0};
   uint8_t context[9] = {0};
@@ -182,7 +193,6 @@ uint8_t krk_query_process(kn_block *nbl, int32_t *sock) {
   memcpy(context, &nbl[dataoffset], 8);
 
   return krk_context_parse(user, context,
-			   &nbl[dataoffset+8],
-			   req_s - dataoffset - 8);
-
+                           &nbl[dataoffset + 8],
+                           req_s - dataoffset - 8);
 }

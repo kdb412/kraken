@@ -8,8 +8,7 @@ typedef uchar kn_block[4096];
 #define str(x) #x
 static const uint64_t k_sep = 0xb00b1ee5;
 
-typedef enum _coltypes
-{
+typedef enum _coltypes {
   k_varch = 900,
   k_int,
   k_bigint,

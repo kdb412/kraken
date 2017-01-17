@@ -7,11 +7,10 @@
 #define KRAKEN_ID "KRAKENSQL"
 #define KRAKEN_VER "0.1"
 
-
 typedef struct _krk_rec_meta
 {
-  uint64_t tid_clinkid [200][200];
-  char *cn [200][200];
+  uint64_t tid_clinkid[200][200];
+  char *cn[200][200];
   uint32_t ct[200][200];
 
 } krk_recmeta;
@@ -40,7 +39,6 @@ typedef struct _krk_table_meta
   char *tablenm[200];
   FILE *tbl_files[200];
 } krk_tablemeta;
-
 
 /**
  * Database meta data begins in the folder in a file

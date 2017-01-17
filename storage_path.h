@@ -14,4 +14,3 @@ typedef struct _krk_db_path
 
 int krk_checkstoragepath(char *p, uint16_t sz);
 int _krk_checkdbpath(char *p);
-

@@ -11,12 +11,13 @@
 
 extern const uchar krk_b64[64];
 
-uchar randbyte() {
+uchar randbyte()
+{
   uint32_t cntr = 0;
   static uint32_t seed = 0;
   time_t rawtime;
   uchar timestr[255] =
-    {0};
+      {0};
   struct tm *timeinfo;
 
   time(&rawtime);
@@ -27,8 +28,9 @@ uchar randbyte() {
   seed += getpid();
 #endif
 
-  strcpy((char *) timestr, asctime(timeinfo));
-  while (cntr < strlen(asctime(timeinfo))) {
+  strcpy((char *)timestr, asctime(timeinfo));
+  while (cntr < strlen(asctime(timeinfo)))
+  {
     seed += timestr[cntr];
     cntr++;
   }
@@ -39,12 +41,13 @@ uchar randbyte() {
   return krk_b64[rand() % 64];
 }
 
-uint32_t randint() {
+uint32_t randint()
+{
   uint32_t cntr = 0;
   static uint32_t seed = 0;
   time_t rawtime;
   uchar timestr[255] =
-    {0};
+      {0};
   struct tm *timeinfo;
 
   time(&rawtime);
@@ -56,9 +59,9 @@ uint32_t randint() {
   seed += getpid();
 #endif
 
-
-  strcpy((char *) timestr, asctime(timeinfo));
-  while (cntr < strlen(asctime(timeinfo))) {
+  strcpy((char *)timestr, asctime(timeinfo));
+  while (cntr < strlen(asctime(timeinfo)))
+  {
     seed += timestr[cntr];
     cntr++;
   }
@@ -67,5 +70,4 @@ uint32_t randint() {
   srand(seed);
 
   return rand() % 4294967296;
-
 }
