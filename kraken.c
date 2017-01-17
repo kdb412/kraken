@@ -14,7 +14,7 @@ void usage()
 {
   char GNU_TEXT[] =
       {
-          "krakensql is a RDBMS with simplicity in mind\n"
+          "krakendb is a RDBMS with simplicity in mind\n"
           "Copyright (C) 2016 skullybox@gmx.com\n\n"
 
           "This program is free software: you can redistribute it and/or modify\n"
