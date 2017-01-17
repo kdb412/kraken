@@ -72,7 +72,7 @@ do
 
                 count++;
 
-                end = end+sizeof(uint16_t);
+                end = end+sizeof(uint64_t);
                 tip = end;
             }
             else
