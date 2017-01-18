@@ -96,6 +96,7 @@ echo "cmake_minimum_required(VERSION 3.6)" > CMakeLists.txt
 echo "project(kraken)" >> CMakeLists.txt
 
 echo -e "\nset(CMAKE_C_FLAGS \"\${CMAKE_C_FLAGS} -std=c11 -w\")" >> CMakeLists.txt
+echo -e "\nset(CMAKE_COLOR_MAKEFILE OFF)" >> CMakeLists.txt
 
 SOURCE="set(SOURCE_FILES "
 for i in $(ls *.c *.h)
