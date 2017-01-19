@@ -4,7 +4,7 @@
 #include "storage_path.h"
 #include <stdio.h>
 
-#define KRAKEN_ID "KRAKENSQL"
+#define KRAKEN_ID "KRAKENDB"
 #define KRAKEN_VER "0.1"
 
 typedef struct _krk_rec_meta
@@ -48,7 +48,7 @@ typedef struct _krk_table_meta
  * 10 bytes for the database version
  * 20 bytes for the database name
  *
- * ie. KRAKENSQL | 0.1 | testdb
+ * ie. KRAKENDB | 0.1 | testdb
  *
  * Following this 40 bytes that identify the database type
  * are blocks of 65k bytes describing the tables in the database
