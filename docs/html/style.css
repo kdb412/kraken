@@ -1,0 +1,66 @@
+@font-face {
+    font-family: wendigo;
+    src: url(SourceSansPro-Regular.ttf) format('truetype');
+}
+
+body
+{
+    font-family: wendigo;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 12px;
+    max-width: 780px;
+    margin: 3% auto 3% auto;
+    background: #fff;
+}
+
+.container { background: #f6f6f6; clear: both; display: table;
+	     box-shadow: 0px 0px 1px 1px #ccc;
+	   }
+
+
+p { font-family: wendigo;  color: #555; font-weight: 100;}
+h0,h2,h3,h4 { font-family: wendigo; color: #000;
+
+	    }
+
+.floaty
+{
+    float: left;
+    max-width: 300px;
+    padding-right: 4%;
+}
+
+.topcontainer
+{
+    margin: 0% auto 0% auto;
+    padding: 20px;
+    background: #eee;
+    border-bottom: 1px solid #ccc;
+
+}
+
+.highlightcontent
+{
+    margin: 0% auto 0% auto;
+    padding: 10px 30px 10px 30px;
+    background: #efefef;
+    border-bottom: 1px solid #ccc;
+}
+
+.contentcontainer
+{
+    margin: 0% auto 0% auto;
+    padding: 0 30px 0 30px;
+    border-bottom: 1px solid #ccc;
+}
+
+.clearleft
+{
+    margin: 1% auto 2% auto;
+    padding: 10px 0 10px 0;
+    clear: left;
+
+}
+
+
