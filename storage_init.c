@@ -18,7 +18,6 @@ uint8_t krk_mountdb(uchar *c)
   pthread_mutex_lock(&(krk_dbpath.spl));
   if (krk_dbpath.mounted == 0)
   {
-
     if (!_krk_mountdb(c))
       krk_dbpath.mounted = 1;
   }
@@ -51,6 +50,7 @@ uint8_t krk_umountdb(uchar *c)
   {
     if (!_krk_umountdb(c))
       krk_dbpath.mounted = 0;
+      memset(&krk_dbpath, 0, sizeof(krk_db_path));
   }
   else
   {

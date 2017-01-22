@@ -1,5 +1,6 @@
 #include "testdb.h"
 #include "storage_init.h"
+#include "system_a.h"
 
 void runDBTests()
 {
@@ -15,6 +16,12 @@ void runDBTests()
 
   fprintf(stdout, "Test mount db: ");
   if (!krk_mountdb("testdb"))
+    fprintf(stdout, "1\n");
+  else
+    fprintf(stdout, "0\n");
+
+  fprintf(stdout, "Test add user: ");
+  if (!krk_create_user("admin", "sa"))
     fprintf(stdout, "1\n");
   else
     fprintf(stdout, "0\n");

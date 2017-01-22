@@ -1,6 +1,6 @@
 #include "data_types.h"
 
-kr_type_pair getType(uint16_t t, uint16_t len)
+kr_type_pair getType(krk_col_ty t, uint16_t len)
 {
     kr_type_pair p = {0, 0};
 
@@ -37,7 +37,7 @@ kr_type_pair getType(uint16_t t, uint16_t len)
     return p;
 }
 
-uint64_t getSize(uint16_t t, uint16_t len)
+uint64_t getSize(krk_col_ty t, uint16_t len)
 {
     uint64_t sz = 0;
     if (t == k_varch && len > 0 && len <= 65535)

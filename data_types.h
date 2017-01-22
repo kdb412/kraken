@@ -25,8 +25,8 @@ typedef struct _type_pair
 
 // len is only used for bin and varchar types
 // it is otherwise ignored
-kr_type_pair getType(uint16_t t, uint16_t len);
+kr_type_pair getType(krk_col_ty t, uint16_t len);
 
 // len is only used for bin and varchar types
 // it is otherwise ignored
-uint64_t getSize(uint16_t t, uint16_t len);
+uint64_t getSize(krk_col_ty t, uint16_t len);
