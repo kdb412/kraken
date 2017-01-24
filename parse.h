@@ -1,5 +1,3 @@
 #pragma once
 
-#include "global_types.h"
-
-void krk_sstrip_extra_spaces(char *s);
+void krk_query_spc_strip(char *s);

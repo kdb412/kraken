@@ -26,6 +26,14 @@ void runDBTests()
   else
     fprintf(stdout, "0\n");
 
+  /*
+  fprintf(stdout, "Test create table: ");
+  if (!krk_create_user("testuser", "pass"))
+    fprintf(stdout, "1\n");
+  else
+    fprintf(stdout, "0\n");
+    */
+
   fprintf(stdout, "Test unmount db: ");
   if (!krk_umountdb("testdb"))
     fprintf(stdout, "1\n");
