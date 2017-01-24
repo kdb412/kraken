@@ -52,6 +52,10 @@ uint8_t _krk_create_user(uchar *user, uchar *pass)
         strcat(krk_base, "/users.kr");
         FILE *fuser = fopen(krk_base, "r+b");
 
+        // new file being created
+        if (!fuser)
+            fuser = fopen(krk_base, "w+b");
+
         if (!fuser)
             goto break_out;
 
