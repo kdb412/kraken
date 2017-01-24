@@ -11,5 +11,5 @@ uint8_t _krk_createtb(uchar *c)
 
 
   pthread_mutex_unlock(&(krk_dbpath.spl));
-  return 0;
+  return 1;
 }
