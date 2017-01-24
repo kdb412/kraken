@@ -7,7 +7,7 @@ typedef enum {
   k_logout,
   k_query,
   k_mount,
-  k_dmount,
+  k_umount,
   k_stop
 } krk_contexts;
 
