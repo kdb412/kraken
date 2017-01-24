@@ -33,17 +33,17 @@
 *.su
 
 # CMake stuff
-CMakeCache.txt
-CMakeFiles/*
-Makefile
-cmake_install.cmake
-kraken
+src/CMakeCache.txt
+src/CMakeFiles/*
+src/Makefile
+src/cmake_install.cmake
+src/kraken
 
 # specifics to code generation
-CMakeLists.txt
-query_context.c
-k_*.h
-k_*.c
+src/CMakeLists.txt
+src/query_context.c
+src/k_*.h
+src/k_*.c
 
 # editor files
 *~
