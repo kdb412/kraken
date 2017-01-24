@@ -1,6 +1,6 @@
 #include "testdb.h"
 #include "krk_storage.h"
-#include "system_a.h"
+#include "krk_user.h"
 
 void runDBTests()
 {
