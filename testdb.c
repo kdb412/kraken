@@ -21,7 +21,7 @@ void runDBTests()
     fprintf(stdout, "0\n");
 
   fprintf(stdout, "Test add user: ");
-  if (!krk_create_user("admin", "sa"))
+  if (!krk_create_user("testuser", "pass"))
     fprintf(stdout, "1\n");
   else
     fprintf(stdout, "0\n");

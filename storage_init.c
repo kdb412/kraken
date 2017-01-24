@@ -50,7 +50,7 @@ uint8_t krk_umountdb(uchar *c)
   {
     if (!_krk_umountdb(c))
       krk_dbpath.mounted = 0;
-      memset(&krk_dbpath, 0, sizeof(krk_db_path));
+    memset(&krk_dbpath, 0, sizeof(krk_db_path));
   }
   else
   {
@@ -233,8 +233,12 @@ uint8_t _krk_createdb(uchar *c)
 
   uint64_t bytes_read = 0;
 
+  pthread_mutex_lock(&(krk_dbpath.spl));
   if (krk_dbpath.mounted || strnlen(c, 20) >= 20)
+  {
+    pthread_mutex_unlock(&(krk_dbpath.spl));
     return 1;
+  }
 
   /*
    * create a database only if the
@@ -248,12 +252,16 @@ uint8_t _krk_createdb(uchar *c)
   {
     fclose(krk_db.db_file);
     krk_db.db_file = NULL;
+    pthread_mutex_unlock(&(krk_dbpath.spl));
     return 1;
   }
 
   krk_db.db_file = fopen(krk_base, "ab+");
   if (!krk_db.db_file)
+  {
+    pthread_mutex_unlock(&(krk_dbpath.spl));
     return 1;
+  }
 
   /*
    * create the base database file
@@ -266,9 +274,15 @@ uint8_t _krk_createdb(uchar *c)
   if (ret != 40)
   {
     fclose(krk_db.db_file);
+    pthread_mutex_unlock(&(krk_dbpath.spl));
     return 1;
   }
+
   fclose(krk_db.db_file);
+  pthread_mutex_unlock(&(krk_dbpath.spl));
+  
+  // create default admin
+  krk_create_user("sa", "sa");
   return 0;
 }
 

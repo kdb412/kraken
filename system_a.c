@@ -44,42 +44,41 @@ uint8_t _krk_create_user(uchar *user, uchar *pass)
     uchar tmpBuff[40] = {0};
     int32_t counter = 0;
     char krk_base[4096] = {0};
+    static pthread_mutex_t createUserLock;
 
-    pthread_mutex_lock(&(krk_dbpath.spl));
-    if (krk_dbpath.mounted == 1)
+    pthread_mutex_lock(&createUserLock);
+
+    strcpy(krk_base, krk_dbpath.dbpath);
+    strcat(krk_base, "/users.kr");
+    FILE *fuser = fopen(krk_base, "a+b");
+
+    if (!fuser)
     {
-        strcpy(krk_base, krk_dbpath.dbpath);
-        strcat(krk_base, "/users.kr");
-        FILE *fuser = fopen(krk_base, "r+b");
-
-        // new file being created
-        if (!fuser)
-            fuser = fopen(krk_base, "w+b");
-
-        if (!fuser)
-            goto break_out;
-
-        while (!fseek(fuser, counter, SEEK_SET))
-        {
-            if (fread(tmpBuff, 1, 40, fuser) != 40)
-                break;
-
-            if (!strncmp(tmpBuff, user, 20))
-                write_flag = 0;
-
-            counter += 40;
-        }
-
-        if (write_flag)
-        {
-            fwrite(user, 1, 20, fuser);
-            fwrite(pass, 1, 20, fuser);
-            ret = 0;
-        }
-        fclose(fuser);
+        pthread_mutex_unlock(&createUserLock);
+        goto break_out;
     }
+
+    while (!fseek(fuser, counter, SEEK_SET))
+    {
+        if (fread(tmpBuff, 1, 40, fuser) != 40)
+            break;
+
+        if (!strncmp(tmpBuff, user, 20))
+            write_flag = 0;
+
+        counter += 40;
+    }
+
+    if (write_flag)
+    {
+        fwrite(user, 1, 20, fuser);
+        fwrite(pass, 1, 20, fuser);
+        ret = 0;
+    }
+    fclose(fuser);
+    pthread_mutex_unlock(&createUserLock);
+
 break_out:
-    pthread_mutex_unlock(&(krk_dbpath.spl));
 
     return ret;
 }
