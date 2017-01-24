@@ -12,5 +12,9 @@ typedef struct _krk_db_path
   pthread_mutex_t spl;
 } krk_db_path;
 
+
+extern krk_db_path krk_dbpath;
+extern const uint16_t krk_MAX_DB_PATH;
+
 int krk_checkstoragepath(char *p, uint16_t sz);
 int _krk_checkdbpath(char *p);
