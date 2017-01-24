@@ -1,5 +1,5 @@
 #include "testdb.h"
-#include "storage_init.h"
+#include "krk_storage.h"
 #include "system_a.h"
 
 void runDBTests()

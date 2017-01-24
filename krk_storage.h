@@ -3,6 +3,15 @@
 #include "global_types.h"
 #include "storage_path.h"
 #include <stdio.h>
+#include <stdlib.h>
+
+extern krk_db_path krk_dbpath;
+
+// forward declarations of internal function
+uint8_t _krk_mountdb(uchar *c);
+uint8_t _krk_umountdb(uchar *c);
+uint8_t _krk_createdb(uchar *c);
+uint8_t _krk_createtb(uchar *c);
 
 #define KRAKEN_ID "KRAKENDB"
 #define KRAKEN_VER "0.1"
@@ -68,3 +77,5 @@ uint8_t krk_createdb(uchar *c);
 uint8_t krk_createtb(uchar *c);
 uint8_t krk_mountdb(uchar *c);
 uint8_t krk_umountdb(uchar *c);
+
+krk_databasemeta krk_db;
