@@ -106,7 +106,7 @@ done
 SOURCE="$SOURCE )"
 
 echo -e "\n$SOURCE" >> CMakeLists.txt
-
+echo -e "\n#add_definitions(-DTESTDB)" >> CMakeLists.txt
 echo 'add_executable(kraken ${SOURCE_FILES})' >> CMakeLists.txt
 
 echo -e "\nif (WIN32)" >> CMakeLists.txt

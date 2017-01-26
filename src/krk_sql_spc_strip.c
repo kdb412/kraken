@@ -1,6 +1,6 @@
 #include "global_types.h"
 
-void krk_sstrip_extra_spaces(char *s)
+void krk_sql_spc_strip(char *s)
 {
   uint8_t disable = 0;
   uint32_t count = 0;

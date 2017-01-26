@@ -1,10 +1,21 @@
 #include "q_processor.h"
 #include "query_context.h"
+#include "parse.h"
 
 #include <stdlib.h>
 
 uint8_t q_processor(uchar *c, uint8_t *item[200], uint16_t sz[200])
 {
+
+  // sql queries will be single items
+  if(strcmp(c, "k_query") && item[0] != NULL)
+  {
+    // remove extra spaces in query
+    krk_sql_spc_strip(item[0]);
+
+
+
+  }
 
   // free up memory
   for (int i = 0; i < 200; i++)
@@ -12,6 +23,7 @@ uint8_t q_processor(uchar *c, uint8_t *item[200], uint16_t sz[200])
     if (item[i] == NULL)
       break;
     free(item[i]);
+    item[i] = NULL;
   }
   return 0;
 }
