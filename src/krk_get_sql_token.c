@@ -6,5 +6,13 @@ krk_sql_token *krk_get_sql_token(char *s)
 {
     krk_sql_token *token = NULL;
 
+    // get the query mode - select, insert etc.
+    int8_t mode = krk_get_sql_mode(s);
+    if (mode <= 0)
+        return NULL;
+
+    token = (krk_sql_token *)calloc(1, sizeof(krk_sql_token));
+    token->mode = mode;
+
     return token;
 }

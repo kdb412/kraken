@@ -16,6 +16,14 @@ enum _krk_sql_alogic
     KRK_NEQ
 } krk_sql_alogic;
 
+enum _krk_sql_mode
+{
+    SELECT = 11,
+    INSERT,
+    UPDATE,
+    DELETE
+} krk_sql_mode;
+
 typedef struct _krk_sql_token
 {
     /* 
@@ -29,7 +37,10 @@ typedef struct _krk_sql_token
     */
 
     // select, insert, update, delete
-    uint8_t mode[6];
+    uint8_t mode;
+
+    // table names
+    uint8_t tblname[200];
 
     // column names
     uint8_t *cols[200];
@@ -50,3 +61,5 @@ typedef struct _krk_sql_token
 
 void krk_sql_spc_strip(char *s);
 krk_sql_token* krk_get_sql_token(char *s);
+int8_t krk_get_sql_mode(char s);
+
