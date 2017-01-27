@@ -17,7 +17,7 @@ do
 done
 echo -e "#include <string.h>" >> query_context.c
 
-echo -e "\nuint8_t krk_context_parse(uint8_t *user," >> query_context.c
+echo -e "\nuint8_t krk_context_parse(int32_t *sock, uint8_t *user," >> query_context.c
 echo -e "                          uint8_t *context," >> query_context.c
 echo -e "                          uint8_t *data," >> query_context.c
 echo -e "                          uint16_t sz) {\n" >> query_context.c
@@ -26,7 +26,7 @@ for i in $(egrep '^\s+k_' query_context.h | sed 's/^\s+//g' | sed 's/,//g' | awk
 do
     echo -e "    if(strncmp(context, str($i), 8))"  >> query_context.c
     echo -e "    {" >> query_context.c
-    echo "       return $i""_f(user, data, sz);" >> query_context.c
+    echo "       return $i""_f(sock, user, data, sz);" >> query_context.c
     echo -e "    }" >> query_context.c
 done
 echo "}" >> query_context.c
@@ -35,7 +35,7 @@ echo "}" >> query_context.c
 for i in $(egrep '^\s+k_' query_context.h | sed 's/^\s+//g' | sed 's/,//g' | awk '{print $1;}')
 do
     echo -e "\n#include \"global_types.h\"" > $i.h
-    echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz);" >> $i.h
+    echo "uint8_t $i""_f(uint32_t *sock, uint8_t *user, uint8_t *data, uint16_t sz);" >> $i.h
 done
 
 ## Source files for function definition
@@ -46,7 +46,7 @@ do
     echo -e "#include <string.h>" >> $i.c
     echo -e "#include <stdlib.h>\n\n" >> $i.c
 
-    echo "uint8_t $i""_f(uint8_t *user, uint8_t *data, uint16_t sz) {" >> $i.c
+    echo "uint8_t $i""_f(uint32_t *sock, uint8_t *user, uint8_t *data, uint16_t sz) {" >> $i.c
 
     cat >> $i.c << EOF
 
@@ -87,7 +87,7 @@ do
 
 EOF
 
-    echo "    return q_processor(\"$i\", items, sizes);" >> $i.c
+    echo "    return q_processor(sock, \"$i\", items, sizes);" >> $i.c
     echo -e "}" >> $i.c
 done
 

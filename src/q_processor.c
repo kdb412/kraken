@@ -4,20 +4,22 @@
 
 #include <stdlib.h>
 
-uint8_t q_processor(uchar *c, uint8_t *item[200], uint16_t sz[200])
+uint8_t q_processor(uint32_t *sock, uchar *c, uint8_t *item[200], uint16_t sz[200])
 {
 
   // sql queries will be single items
-  if(strcmp(c, "k_query") && item[0] != NULL)
+  if (strcmp(c, "k_query") && item[0] != NULL)
   {
     // remove extra spaces in query
     krk_sql_spc_strip(item[0]);
+    krk_sql_token *qtk = krk_get_sql_token(item[0]);
 
-
-
+    if (!qtk)
+      goto free_out;
   }
 
-  // free up memory
+// free up memory
+free_out:
   for (int i = 0; i < 200; i++)
   {
     if (item[i] == NULL)

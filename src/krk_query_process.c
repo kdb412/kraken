@@ -1,6 +1,6 @@
 #include "query_s.h"
 
-// TODO: process request
+// process request
 uint8_t krk_query_process(kn_block *nbl, int32_t *sock)
 {
   uint16_t req_s = 0;
@@ -20,7 +20,7 @@ uint8_t krk_query_process(kn_block *nbl, int32_t *sock)
   // get context
   memcpy(context, &nbl[dataoffset], 8);
 
-  return krk_context_parse(user, context,
+  return krk_context_parse(sock, user, context,
                            &nbl[dataoffset + 8],
                            req_s - dataoffset - 8);
 }
