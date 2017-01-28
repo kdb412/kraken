@@ -1,6 +1,7 @@
 #pragma once
-
+#include <stdio.h>
 #include "parse.h"
+
 
 krk_sql_token *krk_get_sql_token(char *s)
 {
