@@ -6,6 +6,9 @@ krk_sql_token *krk_get_sql_token(char *s)
 {
     krk_sql_token *token = NULL;
 
+    // remove extra space in query
+    krk_sql_spc_strip(s);
+
     // get the query mode - select, insert etc.
     int8_t mode = krk_get_sql_mode(s);
     if (mode <= 0)

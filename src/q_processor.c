@@ -10,8 +10,7 @@ uint8_t q_processor(uint32_t *sock, uchar *c, uint8_t *item[200], uint16_t sz[20
   // sql queries will be single items
   if (strcmp(c, "k_query") && item[0] != NULL)
   {
-    // remove extra spaces in query
-    krk_sql_spc_strip(item[0]);
+    // get query token
     krk_sql_token *qtk = krk_get_sql_token(item[0]);
 
     if (!qtk)
