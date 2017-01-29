@@ -15,12 +15,15 @@ krk_sql_token *krk_get_sql_token(char *s)
     token = (krk_sql_token *)calloc(1, sizeof(krk_sql_token));
     token->mode = mode;
 
-    // get the table 
-    if(krk_get_table_sql(s, token))
+    // get the table
+    if (krk_get_table_sql(s, token))
     {
         free(token);
         token = NULL;
+        return token;
     }
+
+    
 
     return token;
 }
