@@ -9,7 +9,7 @@ uint8_t krk_get_table_sql(char *s, krk_sql_token *tk)
 
     if (tk->mode == SELECT || tk->mode == DELETE)
     {
-        while (count != len - 6 && tmpPtr != '\0')
+        while (count < len - 6 && tmpPtr != '\0')
         {
             if (!strncmp(tmpPtr, " from ", 6))
             {
@@ -33,7 +33,7 @@ uint8_t krk_get_table_sql(char *s, krk_sql_token *tk)
 
     if (tk->mode == INSERT)
     {
-        while (count != len - 6 && tmpPtr != '\0')
+        while (count < len - 6 && tmpPtr != '\0')
         {
             if (!strncmp(tmpPtr, " into ", 6))
             {
@@ -55,7 +55,7 @@ uint8_t krk_get_table_sql(char *s, krk_sql_token *tk)
 
     if (tk->mode == UPDATE)
     {
-        while (count != len - 7 && tmpPtr != '\0')
+        while (count < len - 7 && tmpPtr != '\0')
         {
             if (!strncmp(tmpPtr, "update ", 7))
             {
