@@ -1,6 +1,7 @@
 #include "testdb.h"
 #include "krk_storage.h"
 #include "krk_user.h"
+#include "parse.h"
 
 void runDBTests()
 {
@@ -8,7 +9,7 @@ void runDBTests()
   sleep(2);
 
   runDBSysCommands();
-  runTableQueryTests();
+  runSelectTableQueryTests();
 
 #endif
 }
@@ -50,12 +51,46 @@ void runDBSysCommands()
   fprintf(stdout, "========================\n");
 }
 
-void runTableQueryTests()
+void runSelectTableQueryTests()
 {
+  uint32_t totalTests = 0;
+  char *table_queries[] = {
+      "select * from table123",
+      "table123",
+      " select col1, col2, col3 from userinfo",
+      "userinfo",
+      "select  fruit, vegetables, meats from   grocery_list",
+      "grocery_list",
+      "select a,b,c from alphabet_soup where   a in ('a','b','c',  'd')",
+      "alphabet_soup",
+      "FIN"};
 
+  // count the total Tests
+  for (int i = 0; strcmp("FIN", table_queries[i]); i += 2)
+    totalTests = i / 2 + 1;
 
-  fprintf(stdout, "DB Table Query Tests");
+  fprintf(stdout, "[Table name] SQL Token Tests");
   fprintf(stdout, "\n========================\n");
 
-  fprintf(stdout, "\n========================\n");
+  for (int i = 0; i < totalTests * 2 - 1; i += 2)
+  {
+    krk_sql_token *tk;
+    tk = NULL;
+
+    fprintf(stdout, "Table Select Query %d/%d: ", i / 2 + 1, totalTests);
+
+    tk = krk_get_sql_token(table_queries[i]);
+    if (tk && !strcmp(tk->tblname, table_queries[i++]))
+      fprintf(stdout, "P\n");
+    else
+      fprintf(stdout, "F\n");
+
+    if (tk)
+    {
+      free(tk);
+      tk = NULL;
+    }
+  }
+
+  fprintf(stdout, "========================\n");
 }

@@ -23,7 +23,5 @@ krk_sql_token *krk_get_sql_token(char *s)
         return token;
     }
 
-    
-
     return token;
 }

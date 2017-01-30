@@ -6,4 +6,4 @@
 
 void runDBTests();
 void runDBSyscommands();
-void runTableQueryTests();
+void runSelectTableQueryTests();
