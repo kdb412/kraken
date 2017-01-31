@@ -18,8 +18,10 @@ krk_sql_token *krk_get_sql_token(char *s)
     // get the table
     if (krk_get_table_sql(s, token))
     {
-        free(token);
+        if (token)
+            free(token);
         token = NULL;
+        printf("FREE\n");
         return token;
     }
 

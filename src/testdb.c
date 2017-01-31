@@ -8,15 +8,14 @@ void runDBTests()
 #ifdef TESTDB
   sleep(2);
 
-  runDBSysCommands();
   runSelectTableQueryTests();
+  runDBSysCommands();
 
 #endif
 }
 
 void runDBSysCommands()
 {
-  fprintf(stdout, "\n========================\n");
   fprintf(stdout, "DB System Tests");
   fprintf(stdout, "\n========================\n");
   fprintf(stdout, "Test create db: ");
@@ -54,7 +53,7 @@ void runDBSysCommands()
 void runSelectTableQueryTests()
 {
   uint32_t totalTests = 0;
-  char *table_queries[] = {
+  char table_queries[][1024] = {
       "select * from table123",
       "table123",
       " select col1, col2, col3 from userinfo",
@@ -69,6 +68,7 @@ void runSelectTableQueryTests()
   for (int i = 0; strcmp("FIN", table_queries[i]); i += 2)
     totalTests = i / 2 + 1;
 
+  fprintf(stdout, "\n========================\n");
   fprintf(stdout, "[Table name] SQL Token Tests");
   fprintf(stdout, "\n========================\n");
 
@@ -80,7 +80,8 @@ void runSelectTableQueryTests()
     fprintf(stdout, "Table Select Query %d/%d: ", i / 2 + 1, totalTests);
 
     tk = krk_get_sql_token(table_queries[i]);
-    if (tk && !strcmp(tk->tblname, table_queries[i++]))
+
+    if (tk && !strcmp(tk->tblname, table_queries[i+1]))
       fprintf(stdout, "P\n");
     else
       fprintf(stdout, "F\n");

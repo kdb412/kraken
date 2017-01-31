@@ -42,7 +42,6 @@ void krk_sql_spc_strip(char *s)
   // copy last byte
   strncat(s_tmp, tip, 1);
 
- // BUG - crash
-//  strcpy(s, s_tmp);
+  strcpy(s, s_tmp);
   free(s_tmp);
 }
