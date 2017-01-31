@@ -7,7 +7,8 @@ typedef enum _coltypes {
     k_int,
     k_bigint,
     k_float,
-    k_bin
+    k_bin,
+    k_bool
 } krk_col_ty;
 
 typedef uchar kr_varch;
