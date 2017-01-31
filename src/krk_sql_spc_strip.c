@@ -17,7 +17,8 @@ void krk_sql_spc_strip(char *s)
 
     if (*tip == ' ' && count == 0) // remove prefix space
     {
-      tip++;
+      while (*tip == ' ')
+        tip++;
       count++;
     }
     else if (*tip == ' ' && *(tip + 1) == ' ' && disable)

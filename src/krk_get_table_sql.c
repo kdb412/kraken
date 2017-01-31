@@ -67,8 +67,8 @@ uint8_t krk_get_table_sql(char *s, krk_sql_token *tk)
         {
             if (!strncmp(tmpPtr, "update ", 7))
             {
-                tmpPtr += 6;
-                count += 6;
+                tmpPtr += 7;
+                count += 7;
                 b_tmpPtr = tmpPtr;
 
                 while (1)

@@ -8,7 +8,7 @@ void runDBTests()
 #ifdef TESTDB
   sleep(2);
 
-  runSelectTableQueryTests();
+  runTableNameQueryTests();
   runDBSysCommands();
 
 #endif
@@ -50,18 +50,46 @@ void runDBSysCommands()
   fprintf(stdout, "========================\n");
 }
 
-void runSelectTableQueryTests()
+void runTableNameQueryTests()
 {
   uint32_t totalTests = 0;
   char table_queries[][1024] = {
+      // select
       "select * from table123",
       "table123",
-      " select col1, col2, col3 from userinfo",
+      "   select col1, col2, col3 from userinfo",
       "userinfo",
       "select  fruit, vegetables, meats from   grocery_list",
       "grocery_list",
       "select a,b,c from alphabet_soup where   a in ('a','b','c',  'd')",
       "alphabet_soup",
+
+      // insert
+      "insert into foo_bar (column1, col_um2, foo_bar, bar_foo) values ('apple', 'banana', 'pineapple', 'cheese')",
+      "foo_bar",
+      "insert into insurance (accident, coverage) values (true, false)",
+      "insurance",
+      "insert into   stories (title, fantasy, ending) values ('fox and fiddle', true, 'the end')",
+      "stories",
+      "   insert   into   stories (title, fantasy, ending) values ('fox and fiddle', true, 'the end')",
+      "stories",
+
+      // delete
+      "   delete from vulkan where col1 = 'apple'",
+      "vulkan",
+      "delete    from     romulan     where     ship != 'vulkan' or ship != 'enterprise'",
+      "romulan",
+      "delete from Customers where CustomerName='Alfreds Futterkiste' and ContactName='Maria Anders'",
+      "Customers",
+
+      // update
+      "update customers set address = 'nepal' where id = 6",
+      "customers",
+      "update     heros set superpower = 'flight' where name = 'wolverine'",
+      "heros",
+      "    update evildoers set name = 'dr. strange' where lunatic = true",
+      "evildoers",
+
       "FIN"};
 
   // count the total Tests
@@ -77,11 +105,11 @@ void runSelectTableQueryTests()
     krk_sql_token *tk;
     tk = NULL;
 
-    fprintf(stdout, "Table Select Query %d/%d: ", i / 2 + 1, totalTests);
+    fprintf(stdout, "Table Query %d/%d: ", i / 2 + 1, totalTests);
 
     tk = krk_get_sql_token(table_queries[i]);
 
-    if (tk && !strcmp(tk->tblname, table_queries[i+1]))
+    if (tk && !strcmp(tk->tblname, table_queries[i + 1]))
       fprintf(stdout, "P\n");
     else
       fprintf(stdout, "F\n");
