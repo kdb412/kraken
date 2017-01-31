@@ -21,7 +21,6 @@ krk_sql_token *krk_get_sql_token(char *s)
         if (token)
             free(token);
         token = NULL;
-        printf("FREE\n");
         return token;
     }
 
