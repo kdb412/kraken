@@ -16,6 +16,7 @@ typedef uint32_t kr_int;
 typedef uint64_t kr_bigint;
 typedef double kr_float;
 typedef uchar kr_bin;
+typedef uchar kr_bool;
 
 typedef struct _type_pair
 {

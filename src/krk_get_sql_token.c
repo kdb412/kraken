@@ -24,5 +24,8 @@ krk_sql_token *krk_get_sql_token(char *s)
         return token;
     }
 
+    // get the columns
+    krk_get_columns_sql(s, token);
+
     return token;
 }
