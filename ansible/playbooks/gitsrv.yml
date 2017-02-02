@@ -14,28 +14,19 @@
     with_items:
       - git
       - tmux
-      - tinyproxy
+      - nginx
 
-  - name: configure tinyproxy proxypass
-    lineinfile:
-      dest: /etc/tinyproxy.conf
-      line: 'ReversePath "/"  "http://127.0.0.1:3000/"'   
+  - name: nginx config
+    copy:
+      src: '../files/nginx.default'
+      dest: '/etc/nginx/sites-available/default'
+      owner: root
+      group: root
+      mode: 0644
 
-  - name: configure tinyproxy ACL 0.0.0.0
-    lineinfile:
-      dest: /etc/tinyproxy.conf
-      line: 'Allow 0.0.0.0/0'
-      regexp: '^Allow 127\.0\.0\.1'
-
-  - name: configure tinyproxy bind 80
-    lineinfile:
-      dest: /etc/tinyproxy.conf
-      line: 'Port 80'
-      regexp: '^Port 8888'
-
-  - name: configure tiny proxy service
+  - name: configure nginx
     service:
-      name: tinyproxy
+      name: nginx
       state: restarted
       enabled: yes
 
