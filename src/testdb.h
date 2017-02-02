@@ -5,5 +5,5 @@
 #include <stdio.h>
 
 void runDBTests();
-void runDBSyscommands();
+void runDBSysCommands();
 void runTableNameQueryTests();
