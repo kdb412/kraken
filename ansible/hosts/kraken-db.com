@@ -1,0 +1,2 @@
+[gitsrv]
+kraken-db.com

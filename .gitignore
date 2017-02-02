@@ -50,3 +50,4 @@ src/k_*.c
 \#*
 TAGS
 .vscode
+*.retry

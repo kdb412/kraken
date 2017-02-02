@@ -1,0 +1,62 @@
+---
+- name: install git server (web)
+  hosts: gitsrv
+  become_user: root
+  become_method: sudo
+  become: yes
+  vars:
+    repo_root: "/opt/git"
+    githost_user: "git"
+
+  tasks:
+  - name: install required packages
+    package: name={{item}} state=present
+    with_items:
+      - git
+      - tmux
+      - tinyproxy
+
+  - name: configure tinyproxy proxypass
+    lineinfile:
+      dest: /etc/tinyproxy.conf
+      line: 'ReversePath "/"  "http://127.0.0.1:3000/"'   
+
+  - name: configure tinyproxy ACL 0.0.0.0
+    lineinfile:
+      dest: /etc/tinyproxy.conf
+      line: 'Allow 0.0.0.0/0'
+      regexp: '^Allow 127\.0\.0\.1'
+
+  - name: configure tinyproxy bind 80
+    lineinfile:
+      dest: /etc/tinyproxy.conf
+      line: 'Port 80'
+      regexp: '^Port 8888'
+
+  - name: configure tiny proxy service
+    service:
+      name: tinyproxy
+      state: restarted
+      enabled: yes
+
+  - name: install GOGS
+    unarchive:
+      src: https://dl.gogs.io/gogs_v0.9.128_linux_amd64.tar.gz
+      dest: /opt/
+      remote_src: True
+      owner: git
+      group: git
+
+  - name: add git user
+    user:
+      name: git
+      shell: /bin/bash
+      state: present
+  
+  - name: set git root repo path
+    file:
+      path: /opt/git
+      state: directory
+      mode: 0770
+      owner: git
+      group: git
