@@ -1,4 +1,9 @@
 
+
+# bashrc
+alias BKKEY='sudo openssl enc -aes-256-cbc -in /etc/letsencrypt/live/kraken-db.com/fullchain.pem -out cert.`date +%s`'
+alias CERTGEN='sudo letsencrypt certonly --standalone -d kraken-db.com'
+
 # vim settings
 color murphy
 set tabstop =2
