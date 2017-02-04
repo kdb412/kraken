@@ -28,5 +28,11 @@ int8_t krk_get_sql_mode(char *s)
         return ret;
     }
 
+    if (!strncmp(s, "create", 6))
+    {
+        ret = DELETE;
+        return ret;
+    }
+
     return ret;
 }

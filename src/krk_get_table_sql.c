@@ -88,5 +88,9 @@ uint8_t krk_get_table_sql(char *s, krk_sql_token *tk)
         return 1;
     }
 
+    if (tk->mode == CREATE)
+    {
+    }
+
     return 1;
 }

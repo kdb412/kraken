@@ -21,16 +21,17 @@ enum _krk_sql_mode
     SELECT = 11,
     INSERT,
     UPDATE,
-    DELETE
+    DELETE,
+    CREATE
 } krk_sql_mode;
 
 typedef struct _krk_sql_token
 {
     /* 
+        create table pet (<col>..)
         select <cols> from <table>
         select <cols> from <table> where <col> = <col_vals>
         select <cols> from <table> where <col> = <col_vals> and <col> != <col_vals>
-        
         insert into <table> (col,col..) values (val1,val2,..)
         delete from <table> where <col> = <col_vals> or <col> = <col_val>
         update <table> set <col>=<col_val>, <col>=<col_val> where <col>=<col_val> and <col>=<vol_val>
