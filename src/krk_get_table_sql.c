@@ -90,6 +90,29 @@ uint8_t krk_get_table_sql(char *s, krk_sql_token *tk)
 
     if (tk->mode == CREATE)
     {
+        while (count < len - 7 && (*tmpPtr) != '\0')
+        {
+            if (!strncmp(tmpPtr, "create table ", 13))
+            {
+                tmpPtr += 13;
+                count += 13;
+                b_tmpPtr = tmpPtr;
+
+                while (1)
+                {
+                    if (((*tmpPtr) == ' ' || (*tmpPtr) == '\0') && tmpPtr - b_tmpPtr <= 200)
+                    {
+                        strncpy(tk->tblname, b_tmpPtr, tmpPtr - b_tmpPtr);
+                        return 0;
+                    }
+                    tmpPtr++;
+                }
+            }
+
+            count++;
+            tmpPtr++;
+        }
+        return 1;
     }
 
     return 1;

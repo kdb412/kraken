@@ -30,7 +30,7 @@ int8_t krk_get_sql_mode(char *s)
 
     if (!strncmp(s, "create", 6))
     {
-        ret = DELETE;
+        ret = CREATE;
         return ret;
     }
 
