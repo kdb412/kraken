@@ -78,7 +78,7 @@ void krk_get_columns_sql(char *s, krk_sql_token *tk)
                     while (1)
                     {
                         if (((*tail) == ',' || (*tail) == ' ') &&
-                            strncmp(body, "from", strlen("from")))
+                            strncmp(body, ")", strlen(")")))
                         {
                             if (col_count < col_max)
                             {
