@@ -60,8 +60,8 @@ typedef struct _krk_sql_token
 
 } krk_sql_token;
 
-void krk_sql_spc_strip(char *s);
+void krk_sql_spc_strip(char **s);
 krk_sql_token *krk_get_sql_token(char *s);
-int8_t krk_get_sql_mode(char *s);
+int8_t krk_get_sql_mode(char **s);
 uint8_t krk_get_table_sql(char *s, krk_sql_token *tk);
 void krk_get_columns_sql(char *s, krk_sql_token *tk);

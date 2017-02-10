@@ -26,7 +26,7 @@ uint8_t _krk_umountdb(uchar *c)
   // clear table meta data and close table files
   for (int i = 0; i < 200; i++)
   {
-    if (krk_db.tbls.tbl_files)
+    if (krk_db.tbls.tbl_files[i])
     {
       krk_db.tbls.tableid[i] = 0;
       free(krk_db.tbls.tablenm[i]);

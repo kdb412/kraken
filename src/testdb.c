@@ -110,10 +110,10 @@ void runTableNameQueryTests()
 
     fprintf(stdout, "SQL Query %d/%d: ", i / 2 + 1, totalTests);
 
-    tk = krk_get_sql_token(table_queries[i]);
+    tk = krk_get_sql_token(&table_queries[i][0]);
 
     columnCount = 0;
-    while ((tk->cols[columnCount]) != NULL)
+    while (tk != NULL && (tk->cols[columnCount]) != NULL)
       columnCount++;
 
     if (columnCount == table_queries_column_count[i / 2])

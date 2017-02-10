@@ -39,9 +39,9 @@ uint8_t _krk_mountdb(uchar *c)
 
   uint32_t counter = 0;
   bytes_read = fread(krk_tblinfo, 1, krk_tbl_block_sz, krk_db.db_file);
+  
   while (bytes_read == krk_tbl_block_sz && counter < 200)
   {
-
     // get table info
     krk_db.tbls.tableid[counter] = (uint64_t)(*krk_tblinfo);
     krk_db.tbls.tablenm[counter] = malloc(strnlen(&krk_tblinfo[8], 20));
