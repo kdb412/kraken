@@ -4,6 +4,7 @@
 #include "storage_path.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 extern krk_db_path krk_dbpath;
 

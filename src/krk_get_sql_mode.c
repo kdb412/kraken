@@ -1,6 +1,6 @@
 #include "parse.h"
 
-int8_t krk_get_sql_mode(char **s)
+int8_t krk_get_sql_mode(char *s)
 {
     int8_t ret = -1;
 
