@@ -19,30 +19,35 @@ void runDBSysCommands()
   fprintf(stdout, "DB System Tests");
   fprintf(stdout, "\n========================\n");
   fprintf(stdout, "Test create db: ");
+  fflush(stdout);
   if (!krk_createdb("testdb"))
     fprintf(stdout, "P\n");
   else
     fprintf(stderr, "F\n");
 
   fprintf(stdout, "Test mount db: ");
+  fflush(stdout);
   if (!krk_mountdb("testdb"))
     fprintf(stdout, "P\n");
   else
     fprintf(stderr, "F\n");
 
   fprintf(stdout, "Test add user: ");
+  fflush(stdout);
   if (!krk_create_user("testuser", "pass"))
     fprintf(stdout, "P\n");
   else
     fprintf(stderr, "F\n");
 
   fprintf(stdout, "Test create table: ");
+  fflush(stdout);
   if (!krk_createtb("  create    table    starwars_character  (name varchar(200), id int, evil bool)"))
     fprintf(stdout, "P\n");
   else
     fprintf(stderr, "F\n");
 
   fprintf(stdout, "Test unmount db: ");
+  fflush(stdout);
   if (!krk_umountdb("testdb"))
     fprintf(stdout, "P\n");
   else
@@ -109,6 +114,7 @@ void runTableNameQueryTests()
     tk = NULL;
 
     fprintf(stdout, "SQL Query %d/%d: ", i / 2 + 1, totalTests);
+    fflush(stdout);
 
     tk = krk_get_sql_token(&table_queries[i][0]);
 

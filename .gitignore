@@ -51,3 +51,7 @@ src/k_*.c
 TAGS
 .vscode
 *.retry
+Debug
+
+kraken.txt
+.codelite
