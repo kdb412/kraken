@@ -56,3 +56,4 @@ Debug
 kraken.txt
 .codelite
 src/kraken.mk
+.DS_Store
