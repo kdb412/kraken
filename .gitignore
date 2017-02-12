@@ -55,4 +55,4 @@ Debug
 
 kraken.txt
 .codelite
-kraken.mk
+src/kraken.mk

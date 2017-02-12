@@ -5,4 +5,3 @@
 
 const uint16_t krk_MAX_DB_PATH = 4096;
 krk_db_path krk_dbpath;
-

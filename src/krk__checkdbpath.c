@@ -1,11 +1,10 @@
 #include "storage_path.h"
 
-int _krk_checkdbpath(char *p)
+int _krk_checkdbpath(char* p)
 {
-  DIR *_dbp = opendir(p);
+  DIR* _dbp = opendir(p);
 
-  if (_dbp == NULL)
-  {
+  if(_dbp == NULL) {
     return 1;
   }
   closedir(_dbp);

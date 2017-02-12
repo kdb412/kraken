@@ -9,18 +9,17 @@
 extern krk_db_path krk_dbpath;
 
 // forward declarations of internal function
-uint8_t _krk_mountdb(uchar *c);
-uint8_t _krk_umountdb(uchar *c);
-uint8_t _krk_createdb(uchar *c);
-uint8_t _krk_createtb(uchar *c);
+uint8_t _krk_mountdb(uchar* c);
+uint8_t _krk_umountdb(uchar* c);
+uint8_t _krk_createdb(uchar* c);
+uint8_t _krk_createtb(uchar* c);
 
 #define KRAKEN_ID "KRAKENDB"
 #define KRAKEN_VER "0.1"
 
-typedef struct _krk_rec_meta
-{
+typedef struct _krk_rec_meta {
   uint64_t tid_clinkid[200][200];
-  char *cn[200][200];
+  char* cn[200][200];
   uint32_t ct[200][200];
 
 } krk_recmeta;
@@ -41,13 +40,12 @@ typedef struct _krk_rec_meta
  * - 20 bytes column name
  * - 4 bytes column type ...
  */
-typedef struct _krk_table_meta
-{
+typedef struct _krk_table_meta {
   krk_recmeta recmeta;
   pthread_mutex_t tbl_loc[200];
   uint64_t tableid[200];
-  char *tablenm[200];
-  FILE *tbl_files[200];
+  char* tablenm[200];
+  FILE* tbl_files[200];
 } krk_tablemeta;
 
 /**
@@ -64,19 +62,18 @@ typedef struct _krk_table_meta
  * are blocks of 65k bytes describing the tables in the database
  *
  */
-typedef struct _krk_database_meta
-{
+typedef struct _krk_database_meta {
   krk_tablemeta tbls;
   pthread_mutex_t db_loc;
-  FILE *db_file;
-  FILE *tx_log;
-  krk_db_path *krk_path;
-  char *dbname;
+  FILE* db_file;
+  FILE* tx_log;
+  krk_db_path* krk_path;
+  char* dbname;
 } krk_databasemeta;
 
-uint8_t krk_createdb(uchar *c);
-uint8_t krk_createtb(uchar *c);
-uint8_t krk_mountdb(uchar *c);
-uint8_t krk_umountdb(uchar *c);
+uint8_t krk_createdb(uchar* c);
+uint8_t krk_createtb(uchar* c);
+uint8_t krk_mountdb(uchar* c);
+uint8_t krk_umountdb(uchar* c);
 
 krk_databasemeta krk_db;

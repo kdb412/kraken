@@ -3,12 +3,12 @@
 #include <inttypes.h>
 
 typedef enum _coltypes {
-    k_varch = 900,
-    k_int,
-    k_bigint,
-    k_float,
-    k_bin,
-    k_bool
+  k_varch = 900,
+  k_int,
+  k_bigint,
+  k_float,
+  k_bin,
+  k_bool
 } krk_col_ty;
 
 typedef uchar kr_varch;
@@ -18,11 +18,10 @@ typedef double kr_float;
 typedef uchar kr_bin;
 typedef uchar kr_bool;
 
-typedef struct _type_pair
-{
-    int type;
-    uint16_t sz;
-    void *t
+typedef struct _type_pair {
+  int type;
+  uint16_t sz;
+  void* t
 } kr_type_pair;
 
 // len is only used for bin and varchar types

@@ -2,8 +2,7 @@
 
 #include <inttypes.h>
 
-typedef struct
-{
+typedef struct {
   uint32_t h0;
   uint32_t h1;
   uint32_t h2;
@@ -11,13 +10,12 @@ typedef struct
   uint32_t h4;
 } DIGEST;
 
-typedef struct
-{
+typedef struct {
   uint64_t size;
   uint64_t r_len;
   DIGEST hash;
 } krk_sha;
 
-void krk_nxtHash(krk_sha *ctx, char *data);
-int32_t krk_initSHA(krk_sha **ctx, uint64_t size);
-void krk_hashStr(krk_sha *ctx, char *hashstr);
+void krk_nxtHash(krk_sha* ctx, char* data);
+int32_t krk_initSHA(krk_sha** ctx, uint64_t size);
+void krk_hashStr(krk_sha* ctx, char* hashstr);

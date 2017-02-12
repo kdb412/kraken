@@ -3,66 +3,50 @@
 #include <string.h>
 #include "global_types.h"
 
-enum _krk_sql_logic
-{
-    KRK_AND = 0,
-    KRK_OR
-} krk_sql_logic;
+enum _krk_sql_logic { KRK_AND = 0, KRK_OR } krk_sql_logic;
 
-enum _krk_sql_alogic
-{
-    KRK_GT = 10,
-    KRK_LT,
-    KRK_EQ,
-    KRK_NEQ
-} krk_sql_alogic;
+enum _krk_sql_alogic { KRK_GT = 10, KRK_LT, KRK_EQ, KRK_NEQ } krk_sql_alogic;
 
-enum _krk_sql_mode
-{
-    SELECT = 11,
-    INSERT,
-    UPDATE,
-    DELETE,
-    CREATE
-} krk_sql_mode;
+enum _krk_sql_mode { SELECT = 11, INSERT, UPDATE, DELETE, CREATE } krk_sql_mode;
 
-typedef struct _krk_sql_token
-{
-    /* 
-        create table pet (<col>..)
-        select <cols> from <table>
-        select <cols> from <table> where <col> = <col_vals>
-        select <cols> from <table> where <col> = <col_vals> and <col> != <col_vals>
-        insert into <table> (col,col..) values (val1,val2,..)
-        delete from <table> where <col> = <col_vals> or <col> = <col_val>
-        update <table> set <col>=<col_val>, <col>=<col_val> where <col>=<col_val> and <col>=<vol_val>
-    */
+typedef struct _krk_sql_token {
+  /*
+      create table pet (<col>..)
+      select <cols> from <table>
+      select <cols> from <table> where <col> = <col_vals>
+      select <cols> from <table> where <col> = <col_vals> and <col> !=
+     <col_vals>
+      insert into <table> (col,col..) values (val1,val2,..)
+      delete from <table> where <col> = <col_vals> or <col> = <col_val>
+      update <table> set <col>=<col_val>, <col>=<col_val> where <col>=<col_val>
+     and <col>=<vol_val>
+  */
 
-    // select, insert, update, delete
-    uint8_t mode;
+  // select, insert, update, delete
+  uint8_t mode;
 
-    // table names
-    uint8_t tblname[200];
+  // table names
+  uint8_t tblname[200];
 
-    // column names
-    uint8_t *cols[200];
+  // column names
+  uint8_t* cols[200];
 
-    // column values
-    uint8_t *col_vals[200];
+  // column values
+  uint8_t* col_vals[200];
 
-    // ie where col9
-    uint8_t *where_col[200];
+  // ie where col9
+  uint8_t* where_col[200];
 
-    // ie where col9 [=|!=|<|>]
-    uint16_t where_logicop[200];
+  // ie where col9 [=|!=|<|>]
+  uint16_t where_logicop[200];
 
-    // ie where col9 [=|!=|<|>] <foo>
-    uint8_t *where_vals[200];
+  // ie where col9 [=|!=|<|>] <foo>
+  uint8_t* where_vals[200];
 
 } krk_sql_token;
 
-char* krk_sql_spc_strip(char *s);
-krk_sql_token *krk_get_sql_token(char *s);
-int8_t krk_get_sql_mode(char *s);
-uint8_t krk_get_table_sql(char *s, krk_sql_token *tk);
-void krk_get_columns_sql(char *s, krk_sql_token *tk);
+char* krk_sql_spc_strip(char* s);
+krk_sql_token* krk_get_sql_token(char* s);
+int8_t krk_get_sql_mode(char* s);
+uint8_t krk_get_table_sql(char* s, krk_sql_token* tk);
+void krk_get_columns_sql(char* s, krk_sql_token* tk);

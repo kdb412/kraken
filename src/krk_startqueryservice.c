@@ -17,7 +17,7 @@ int krk_startqueryservice()
 #endif
 
   tsock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-  if (tsock < 0)
+  if(tsock < 0)
     return 1;
 
   saddr.sin_family = AF_INET;
@@ -27,16 +27,15 @@ UPDATE_PORT_RANGE:
   port_range++;
   saddr.sin_port = htons(port_range);
 
-  if (port_range > 50010)
+  if(port_range > 50010)
     return -1;
 
-  if (bind(tsock, (struct sockaddr *)&saddr, sizeof(saddr)) == -1 &&
-      port_range < 50010)
-  {
+  if(bind(tsock, (struct sockaddr*)&saddr, sizeof(saddr)) == -1 &&
+      port_range < 50010) {
     goto UPDATE_PORT_RANGE;
   }
 
-  if (listen(tsock, 40) < 0)
+  if(listen(tsock, 40) < 0)
     return -1;
 
 #ifndef _WIN32
@@ -60,4 +59,3 @@ UPDATE_PORT_RANGE:
 
   return 0;
 }
-

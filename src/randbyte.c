@@ -5,9 +5,8 @@ uchar randbyte()
   uint32_t cntr = 0;
   static uint32_t seed = 0;
   time_t rawtime;
-  uchar timestr[255] =
-      {0};
-  struct tm *timeinfo;
+  uchar timestr[255] = { 0 };
+  struct tm* timeinfo;
 
   time(&rawtime);
   timeinfo = localtime(&rawtime);
@@ -17,9 +16,8 @@ uchar randbyte()
   seed += getpid();
 #endif
 
-  strcpy((char *)timestr, asctime(timeinfo));
-  while (cntr < strlen(asctime(timeinfo)))
-  {
+  strcpy((char*)timestr, asctime(timeinfo));
+  while(cntr < strlen(asctime(timeinfo))) {
     seed += timestr[cntr];
     cntr++;
   }

@@ -7,6 +7,6 @@
 
 extern krk_db_path krk_dbpath;
 
-uint8_t krk_create_user(uchar *user, uchar *pass);
-uint8_t krk_login(uchar *user, uchar *pass);
-uint8_t krk_logout(uchar *user);
+uint8_t krk_create_user(uchar* user, uchar* pass);
+uint8_t krk_login(uchar* user, uchar* pass);
+uint8_t krk_logout(uchar* user);
