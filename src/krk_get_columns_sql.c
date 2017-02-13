@@ -6,6 +6,7 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
   uint8_t col_count = 0;
   char* tail = NULL;
   char* body = NULL;
+  char buff[1024] = { 0 };
 
   if(tk->mode == SELECT) {
     if(!strncmp(s, "select ", strlen("select "))) {
@@ -46,7 +47,6 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
   }
 
   if(tk->mode == CREATE) {
-    char buff[1024] = { 0 };
     strcat(buff, "create table ");
     if(strlen(tk->tblname) <= 0)
       return;
@@ -88,5 +88,13 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
         body++;
       }
     }
+  }
+
+  if(tk->mode == INSERT) {
+    strcat(buff, "insert into ");
+    if(strlen(tk->tblname) <= 0)
+      return;
+    strcat(buff, tk->tblname);
+    strcat(buff, " (");
   }
 }
