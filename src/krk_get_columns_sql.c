@@ -103,13 +103,13 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
     if(strlen(s) <= strlen(buff))
       return;
 
-    body = &s[strlen(buff)]+1;
+    body = &s[strlen(buff)];
     tail = body;
     col_count = 0;
 
     while(*tail != '\0' && *tail != ')') {
 
-      while(*body == ' ' && *body != '\0')
+      while((*body == ' ' || *body == '(') && *body != '\0')
         body++;
 
       if(*body == '\0')
@@ -125,12 +125,15 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
 
       tk->cols[col_count] = (uint8_t*)malloc(tail - body + 1);
       if(tk->cols[col_count] != NULL)
-        memset(tk->cols[col_count], 0, tail - body);
+        memset(tk->cols[col_count], 0, tail - body + 1);
       else
         exit(1);
 
       strncpy(tk->cols[col_count], body, tail - body);
       col_count++;
+
+      if(*tail == '\0' || *tail == '\)')
+        return;
 
       tail++;
       body = tail;
