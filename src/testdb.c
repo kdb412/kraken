@@ -74,7 +74,7 @@ void runTableNameQueryTests()
     "insert into foo_bar (column1, col_um2, foo_bar, bar_foo) values ('apple', "
     "'banana', 'pineapple', 'cheese')",
     "foo_bar",
-    "insert into insurance (accident, coverage) values (true, false)",
+    "insert into insurance(accident, coverage) values (true, false)",
     "insurance", "insert into   stories (title, fantasy, ending) values ('fox "
                  "and fiddle', true, 'the end')",
     "stories", "   insert   into   stories (title, fantasy, ending) values "

@@ -38,7 +38,7 @@ uint8_t krk_get_table_sql(char* s, krk_sql_token* tk)
         b_tmpPtr = tmpPtr;
 
         while(1) {
-          if(((*tmpPtr) == ' ' || (*tmpPtr) == '\0') &&
+          if(((*tmpPtr) == ' ' || (*tmpPtr) == '\0' || (*tmpPtr) == '(') &&
               tmpPtr - b_tmpPtr <= 200) {
             strncpy(tk->tblname, b_tmpPtr, tmpPtr - b_tmpPtr);
             return 0;

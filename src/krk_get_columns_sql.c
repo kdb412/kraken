@@ -8,6 +8,7 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
   char* tail = NULL;
   char* body = NULL;
   char buff[1024] = { 0 };
+  char buff2[1024] = { 0 };
 
   if(tk->mode == SELECT) {
     if(!strncmp(s, "select ", strlen("select "))) {
@@ -94,14 +95,28 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
   }
 
   if(tk->mode == INSERT) {
+    memset(buff, 0, 1024);
+    memset(buff2, 0, 1024);
     strcat(buff, "insert into ");
+    strcat(buff2, "insert into ");
     if(strlen(tk->tblname) <= 0)
       return;
     strcat(buff, tk->tblname);
+    strcat(buff2, tk->tblname);
     strcat(buff, " (");
+    strcat(buff2, "(");
 
-    if(strlen(s) <= strlen(buff))
-      return;
+    // handle the case where no space between
+    //  table name and first brace
+    if(!strncmp(s, buff, strlen(buff))) {
+      body = &s[strlen(buff)];
+      if(strlen(s) <= strlen(buff))
+        return;
+    } else if(!strncmp(s, buff2, strlen(buff2))) {
+      body = &s[strlen(buff2)];
+      if(strlen(s) <= strlen(buff2))
+        return;
+    }
 
     body = &s[strlen(buff)];
     tail = body;
