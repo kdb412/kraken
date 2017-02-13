@@ -118,7 +118,6 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
         return;
     }
 
-    body = &s[strlen(buff)];
     tail = body;
     col_count = 0;
 
