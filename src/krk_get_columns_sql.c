@@ -4,6 +4,7 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
 {
   const uint8_t col_max = 200;
   uint8_t col_count = 0;
+  uint8_t error_found = 0;
   char* tail = NULL;
   char* body = NULL;
   char buff[1024] = { 0 };
@@ -44,6 +45,7 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
         body++;
       }
     }
+    return;
   }
 
   if(tk->mode == CREATE) {
@@ -88,6 +90,7 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
         body++;
       }
     }
+    return;
   }
 
   if(tk->mode == INSERT) {
@@ -96,5 +99,42 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
       return;
     strcat(buff, tk->tblname);
     strcat(buff, " (");
+
+    if(strlen(s) <= strlen(buff))
+      return;
+
+    body = &s[strlen(buff)]+1;
+    tail = body;
+    col_count = 0;
+
+    while(*tail != '\0' && *tail != ')') {
+
+      while(*body == ' ' && *body != '\0')
+        body++;
+
+      if(*body == '\0')
+        return;
+
+      tail = body;
+
+      while(*tail != ',' && *tail != ' ' && *tail != '\0' && *tail != ')')
+        tail++;
+
+      if(*tail == '\0')
+        return;
+
+      tk->cols[col_count] = (uint8_t*)malloc(tail - body + 1);
+      if(tk->cols[col_count] != NULL)
+        memset(tk->cols[col_count], 0, tail - body);
+      else
+        exit(1);
+
+      strncpy(tk->cols[col_count], body, tail - body);
+      col_count++;
+
+      tail++;
+      body = tail;
+    }
+    return;
   }
 }
