@@ -8,3 +8,15 @@
           - make
           - clang
           - apache2
+          - unzip
+
+    - name: copy git source
+      copy: src=git.zip dest=/opt/git-src.zip
+      register: gitsrc
+
+    - name: create git-src folder
+      file: path=/opt/git-src/ state=directory
+
+    - name: extract git source
+      unarchive: src=/opt/git-src.zip dest=/opt/git-src/ copy=no
+      when: gitsrc.changed
