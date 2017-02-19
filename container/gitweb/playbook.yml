@@ -7,8 +7,9 @@
           - git
           - make
           - clang
-          - apache2
           - unzip
+          - lighttpd
+          - libcgi-fast-perl
 
     - name: copy git source
       copy: src=git.zip dest=/opt/git-src.zip
@@ -20,3 +21,29 @@
     - name: extract git source
       unarchive: src=/opt/git-src.zip dest=/opt/git-src/ copy=no
       when: gitsrc.changed
+ 
+    - name: configure gitweb scripts
+      command: "make -C /opt/git-src/git/ GITWEB_PROJECTROOT=/opt/git/ prefix=/usr gitweb"
+      when: gitsrc.changed
+
+    - name: copy gitweb scripts to web server path
+      command: "mv /opt/git-src/git/gitweb /var/www/gitweb"
+      when: gitsrc.changed
+
+    - name: clean up git source
+      file: path=/opt/git-src state=absent
+
+    - name: creating root git path
+      file: path=/opt/git state=directory
+
+    - name: configure gitweb config
+      copy: src=gitweb.conf dest=/etc/gitweb.con mode=0644
+
+    - name: copy http server config
+      copy: src=lighttpd.conf dest=/etc/lighttpd/lighttpd.conf mode=0644
+
+    - name: clone repo
+      command: "git clone https://gitlab.com/skullybox/kraken.git /opt/git/kraken"
+
+    - name: restart lighttpd
+      service: name=lighttpd state=restarted
