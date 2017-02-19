@@ -42,8 +42,25 @@
     - name: copy http server config
       copy: src=lighttpd.conf dest=/etc/lighttpd/lighttpd.conf mode=0644
 
-    - name: clone repo
-      command: "git clone https://gitlab.com/skullybox/kraken.git /opt/git/kraken"
+    - name: create repo folder
+      file: path=/opt/git/kraken state=directory
+
+    - name: create git repo
+      command: "git -C /opt/git/kraken init"
+
+    - name: repo file permission
+      file: path="/opt/git/kraken" owner="vagrant" group="vagrant" mode="755"
+
+    - name: link repo path
+      file: dest="/home/vagrant/kraken" src="/opt/git/kraken" state=link
+
+    - name: project keys
+      authorized_key:
+        user: vagrant
+        state: present
+        key: "{{ lookup('file', 'ssh-keys') }}"
 
     - name: restart lighttpd
       service: name=lighttpd state=restarted
+
+
