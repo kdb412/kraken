@@ -43,13 +43,32 @@ Vagrant.configure("2") do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  config.vm.provider "virtualbox" do |vb|
+  # config.vm.provider "virtualbox" do |vb|
   #   # Display the VirtualBox GUI when booting the machine
   #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-   vb.name = "gitweb"
-   vb.memory = "1024"
+
+# AWS ================================================
+
+	config.vm.provider :aws do |aws, override|
+	aws.access_key_id = "#{ENV['AWS_ID']}"
+	aws.secret_access_key = "#{ENV['AWS_KEY']}"
+	aws.keypair_name = "aws"
+
+	aws.ami = "ami-3d299b59"
+
+	aws.region = "ca-central-1"
+	aws.instance_type = "t1.micro"
+	aws.security_groups = ["default"]
+
+	override.ssh.username = "ubuntu"
+	override.ssh.private_key_path = "~/.ssh/aws"
+
+# AWS ================================================
+
+#   vb.name = "gitweb"
+#   vb.memory = "1024"
   end
   #
   # View the documentation for the provider you are using for more
