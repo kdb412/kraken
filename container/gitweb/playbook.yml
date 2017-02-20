@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  user: ubuntu
   tasks:
     - name: install packages
       apt: name={{ item }} state=installed
@@ -49,14 +50,14 @@
       command: "git -C /opt/git/kraken init"
 
     - name: repo file permission
-      file: path="/opt/git/kraken" owner="vagrant" group="vagrant" mode="755"
+      file: path="/opt/git/kraken" owner="ubuntu" group="ubuntu" mode="755"
 
     - name: link repo path
-      file: dest="/home/vagrant/kraken" src="/opt/git/kraken" state=link
+      file: dest="/home/ubuntu/kraken" src="/opt/git/kraken" state=link
 
     - name: project keys
       authorized_key:
-        user: vagrant
+        user: ubuntu
         state: present
         key: "{{ lookup('file', 'ssh-keys') }}"
 

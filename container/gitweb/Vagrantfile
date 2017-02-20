@@ -12,7 +12,10 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "minimal/xenial64"
+  #config.vm.box = "minimal/xenial64"
+ 
+  #	vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
+	config.vm.box = 'dummy'
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -59,7 +62,7 @@ Vagrant.configure("2") do |config|
 	aws.ami = "ami-3d299b59"
 
 	aws.region = "ca-central-1"
-	aws.instance_type = "t1.micro"
+	aws.instance_type = "t2.micro"
 	aws.security_groups = ["default"]
 
 	override.ssh.username = "ubuntu"
@@ -94,7 +97,9 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "playbook.yml"
     ansible.host_key_checking = false
 
-    ansible.extra_vars = { ansible_ssh_user: 'vagrant', ansibel_ssh_port: 2222 }
+# export ANSIBLE_SSH_CONTROL_PATH='%(directory)s/%%h-%%r'
+
+    ansible.extra_vars = { ansible_ssh_user: 'ubuntu', ansible_ssh_port: 22 }
     ansible.sudo = true
   end
 end
