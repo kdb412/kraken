@@ -47,10 +47,10 @@
       file: path=/opt/git/kraken state=directory
 
     - name: create git repo
-      command: "git -C /opt/git/kraken init"
+      command: "git -C /opt/git/kraken init --bare"
 
     - name: repo file permission
-      file: path="/opt/git/kraken" owner="ubuntu" group="ubuntu" mode="755"
+      file: path="/opt/git/kraken" owner="ubuntu" group="ubuntu" mode="755" recurse=yes
 
     - name: link repo path
       file: dest="/home/ubuntu/kraken" src="/opt/git/kraken" state=link
