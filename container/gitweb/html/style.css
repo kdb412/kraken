@@ -1,0 +1,67 @@
+@font-face {
+    font-family: wendigo;
+    src: url(Oswald-Regular.ttf) format('truetype');
+}
+@font-face {
+    font-family: wendigo2;
+    src: url(OpenSans-Light.ttf) format('truetype');
+}
+
+body
+{
+		font-size: 90%;
+    font-family: wendigo;
+    font-weight: 400;
+    padding: 12px;
+    max-width: 780px;
+    margin: 3% auto 3% auto;
+    background: #000 no-repeat top left url('redkraken.png');
+    background-size: 60%;
+}
+
+.container { clear: both; display: table;
+#	     box-shadow: 0px 0px 1px 1px #ccc;
+			 opacity: 0.9;
+       background: #000;
+	   }
+
+
+p { font-family: wendigo2;  color: #fff; font-weight: 100;}
+h0,h2,h3,h4 { font-family: wendigo; color: #FF6991;
+
+	    }
+
+.floaty
+{
+    float: left;
+    max-width: 300px;
+    padding-right: 4%;
+}
+
+.topcontainer
+{
+    margin: 0% auto 0% auto;
+    padding: 20px;
+}
+
+.highlightcontent
+{
+    margin: 0% auto 0% auto;
+    padding: 10px 30px 10px 30px;
+}
+
+.contentcontainer
+{
+    margin: 0% auto 0% auto;
+    padding: 0 30px 0 30px;
+}
+
+.clearleft
+{
+    margin: 1% auto 2% auto;
+    padding: 10px 0 10px 0;
+    clear: left;
+
+}
+
+
