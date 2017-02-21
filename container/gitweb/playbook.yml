@@ -64,4 +64,14 @@
     - name: restart lighttpd
       service: name=lighttpd state=restarted
 
+    - name: sync project website content 
+      copy: src="{{ item }}" dest="/var/www/{{ item }}"
+      with_items:
+        - "html/style.css"
+        - "html/index.html"
+        - "html/redkraken.png"
+        - "html/OpenSans-Light.ttf"
+        - "html/Oswald-Regular.ttf"
+
+
 
