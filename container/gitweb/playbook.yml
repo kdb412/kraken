@@ -49,17 +49,20 @@
     - name: create git repo
       command: "git -C /opt/git/kraken init --bare"
 
-    - name: repo file permission
-      file: path="/opt/git/kraken" owner="ubuntu" group="ubuntu" mode="755" recurse=yes
-
-    - name: link repo path
-      file: dest="/home/ubuntu/kraken" src="/opt/git/kraken" state=link
+    - name: create git user
+      user: name="git" shell="/bin/bash" state=present
 
     - name: project keys
       authorized_key:
-        user: ubuntu
+        user: git 
         state: present
         key: "{{ lookup('file', 'ssh-keys') }}"
+
+    - name: repo file permission
+      file: path="/opt/git/kraken" owner="git" group="git" mode="755" recurse=yes
+
+    - name: link repo path
+      file: dest="/home/ubuntu/kraken" src="/opt/git/kraken" state=link
 
     - name: restart lighttpd
       service: name=lighttpd state=restarted
