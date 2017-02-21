@@ -15,20 +15,20 @@ body
     padding: 12px;
     max-width: 780px;
     margin: 3% auto 3% auto;
-    background: #000 no-repeat top left url('redkraken.png');
+    background: #fff no-repeat top left url('redkraken.png');
     background-size: 60%;
 }
 
 .container { clear: both; display: table;
 #	     box-shadow: 0px 0px 1px 1px #ccc;
-			 opacity: 0.85;
-       background: #000;
-			 border: solid 1px #444;
+			 opacity: 0.9;
+       background: #fff;
+	#		 border: solid 1px #ccc;
 	   }
 
 
-p { font-family: wendigo2;  color: #fff; font-weight: 100;}
-h0,h2,h3,h4 { font-family: wendigo; color: #FF6991;
+p { font-family: wendigo2;  color: #000; font-weight: 100;}
+h0,h1,h2,h3,h4 { font-family: wendigo; color: #FF6991;
 
 	    }
 
@@ -65,4 +65,23 @@ h0,h2,h3,h4 { font-family: wendigo; color: #FF6991;
 
 }
 
+ /* unvisited link */
+a:link {
+    color: #FF6991;
+}
+
+/* visited link */
+a:visited {
+    color: #ff6991;
+}
+
+/* mouse over link */
+a:hover {
+    color: #ff6991;
+}
+
+/* selected link */
+a:active {
+    color: #ff6991;
+}
 
