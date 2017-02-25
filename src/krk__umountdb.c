@@ -18,7 +18,7 @@ uint8_t _krk_umountdb(uchar* c)
   }
   memset(&krk_db.tbls.recmeta.tid_clinkid, 0,
       sizeof(krk_db.tbls.recmeta.tid_clinkid));
-  memset(&krk_db.tbls.recmeta.ct, 0, sizeof(krk_db.tbls.recmeta.ct));
+  memset(&krk_db.tbls.recmeta.ct, 0, 200);
 
   // clear table meta data and close table files
   for(int i = 0; i < 200; i++) {

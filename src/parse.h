@@ -25,11 +25,14 @@ typedef struct _krk_sql_token {
   // select, insert, update, delete
   uint8_t mode;
 
-  // table names
+  // table name
   uint8_t tblname[200];
 
   // column names
   uint8_t* cols[200];
+
+  // column types
+  uint8_t col_typ[200];
 
   // column values
   uint8_t* col_vals[200];

@@ -3,7 +3,7 @@
 #include <inttypes.h>
 
 typedef enum _coltypes {
-  k_varch = 900,
+  k_varch = 10,
   k_int,
   k_bigint,
   k_float,

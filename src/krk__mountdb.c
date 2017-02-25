@@ -78,10 +78,10 @@ uint8_t _krk_mountdb(uchar* c)
 
       // column type
       _offset += 20;
-      krk_db.tbls.recmeta.ct[counter][column_counter] =
-          *((uint32_t*)&(krk_tblinfo[_offset]));
+      krk_db.tbls.recmeta.ct[column_counter] =
+          *((uint8_t*)&(krk_tblinfo[_offset]));
 
-      _offset += 4;
+      _offset ++;
       column_counter++;
     }
 

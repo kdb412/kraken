@@ -20,8 +20,7 @@ uint8_t _krk_createtb(uchar* c);
 typedef struct _krk_rec_meta {
   uint64_t tid_clinkid[200][200];
   char* cn[200][200];
-  uint32_t ct[200][200];
-
+  uint8_t ct[200];
 } krk_recmeta;
 
 /**
