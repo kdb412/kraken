@@ -25,5 +25,5 @@ uchar randbyte()
 
   srand(seed);
 
-  return krk_b64[rand() % 64];
+  return rand()%256;
 }

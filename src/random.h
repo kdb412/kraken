@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+uchar randb64();
 uchar randbyte();
 uint32_t randint();
 
