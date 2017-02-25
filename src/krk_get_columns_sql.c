@@ -51,14 +51,24 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
 
   if(tk->mode == CREATE) {
     strcat(buff, "create table ");
+    strcat(buff2, "create table ");
     if(strlen(tk->tblname) <= 0)
       return;
+      
     strcat(buff, tk->tblname);
     strcat(buff, " (");
+    
+    strcat(buff2, tk->tblname);
+    strcat(buff2, "(");
 
     if(!strncmp(s, buff, strlen(buff))) {
       if(!body) {
         body = &s[strlen(buff)];
+        tail = body;
+      }
+      else if (!strncmp(s, buff2, strlen(buff2)))
+      {
+        body = &s[strlen(buff2)];
         tail = body;
       }
 
@@ -86,7 +96,7 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
             tail++;
           }
         }
-        if((*body) == '\0' || (*body) != ')')
+        if((*body) == '\0' || (*body) == ')')
           break;
         body++;
       }
