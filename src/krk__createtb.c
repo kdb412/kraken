@@ -13,8 +13,6 @@ uint8_t _krk_createtb(uchar* c)
   if(!tk)
     goto end_request;
 
-// krk_get_columns_sql(c, tk);
-
 end_request:
   pthread_mutex_unlock(&(krk_dbpath.spl));
   return ret;
