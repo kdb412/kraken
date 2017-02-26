@@ -67,116 +67,118 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
         body = &s[strlen(buff)];
         tail = body;
       }
-      else if (!strncmp(s, buff2, strlen(buff2)))
-      {
-        body = &s[strlen(buff2)];
+    }
+    else if (!strncmp(s, buff2, strlen(buff2)))
+    {
+      body = &s[strlen(buff2)];
+      tail = body;
+    }
+
+    while(1) {
+      if((*body) != ' ' && (*body) != '\0' && (*body) != ',') {
         tail = body;
-      }
+        while(1) {
+          if(((*tail) == ',' || (*tail) == ' ') &&
+              strncmp(body, ")", strlen(")"))) {
 
-      while(1) {
-        if((*body) != ' ' && (*body) != '\0' && (*body) != ',') {
-          tail = body;
-          while(1) {
-            if(((*tail) == ',' || (*tail) == ' ') &&
-                strncmp(body, ")", strlen(")"))) {
-
-              if(!type_field)
-              {
-                type_field = 1;
-                if(col_count < col_max) {
-                  tk->cols[col_count] = (uint8_t*)malloc(tail - body + 1);
-                  if(tk->cols[col_count] != NULL)
-                    memset(tk->cols[col_count], 0, tail - body);
-                  else
-                    exit(1);
-
-                  strncpy(tk->cols[col_count], body, tail - body);
-                  body = tail;
-                  break;
-                }
+            if(!type_field)
+            {
+              type_field = 1;
+              if(col_count < col_max) {
+                tk->cols[col_count] = (uint8_t*)malloc(tail - body + 1);
+                if(tk->cols[col_count] != NULL)
+                  memset(tk->cols[col_count], 0, tail - body);
                 else
-                {
+                  exit(1);
 
-                  if(col_count < col_max) {
+                strncpy(tk->cols[col_count], body, tail - body);
+                body = tail;
+                break;
+              }
+              else
+              {
+
+                if(col_count < col_max) {
 
 
-                    body = tail;
-                    type_field = 0;
-                    col_count++;
-                  }
+                  body = tail;
+                  type_field = 0;
+                  col_count++;
                 }
-                if((*tail) == '\0')
-                  break;
-                tail++;
               }
             }
           }
-          if((*body) == '\0' || (*body) == ')')
+          if((*tail) == '\0')
             break;
-          body++;
-        }
-      }
-      return;
-    }
-
-    if(tk->mode == INSERT) {
-      memset(buff, 0, 1024);
-      memset(buff2, 0, 1024);
-      strcat(buff, "insert into ");
-      strcat(buff2, "insert into ");
-      if(strlen(tk->tblname) <= 0)
-        return;
-      strcat(buff, tk->tblname);
-      strcat(buff2, tk->tblname);
-      strcat(buff, " (");
-      strcat(buff2, "(");
-
-      // handle the case where no space between
-      //  table name and first brace
-      if(!strncmp(s, buff, strlen(buff))) {
-        body = &s[strlen(buff)];
-        if(strlen(s) <= strlen(buff))
-          return;
-      } else if(!strncmp(s, buff2, strlen(buff2))) {
-        body = &s[strlen(buff2)];
-        if(strlen(s) <= strlen(buff2))
-          return;
-      }
-
-      tail = body;
-      col_count = 0;
-
-      while(*tail != '\0' && *tail != ')') {
-
-        while((*body == ' ' || *body == '(') && *body != '\0')
-          body++;
-
-        if(*body == '\0')
-          return;
-
-        tail = body;
-
-        while(*tail != ',' && *tail != ' ' && *tail != '\0' && *tail != ')')
           tail++;
 
-        if(*tail == '\0')
-          return;
-
-        tk->cols[col_count] = (uint8_t*)malloc(tail - body + 1);
-        if(tk->cols[col_count] != NULL)
-          memset(tk->cols[col_count], 0, tail - body + 1);
-        else
-          exit(1);
-
-        strncpy(tk->cols[col_count], body, tail - body);
-        col_count++;
-
-        if(*tail == '\0' || *tail == '\)')
-          return;
-
-        tail++;
-        body = tail;
+        }
       }
-      return;
+      if((*body) == '\0' || (*body) == ')')
+        break;
+      body++;
     }
+    return;
   }
+
+  if(tk->mode == INSERT) {
+    memset(buff, 0, 1024);
+    memset(buff2, 0, 1024);
+    strcat(buff, "insert into ");
+    strcat(buff2, "insert into ");
+    if(strlen(tk->tblname) <= 0)
+      return;
+    strcat(buff, tk->tblname);
+    strcat(buff2, tk->tblname);
+    strcat(buff, " (");
+    strcat(buff2, "(");
+
+    // handle the case where no space between
+    //  table name and first brace
+    if(!strncmp(s, buff, strlen(buff))) {
+      body = &s[strlen(buff)];
+      if(strlen(s) <= strlen(buff))
+        return;
+    } else if(!strncmp(s, buff2, strlen(buff2))) {
+      body = &s[strlen(buff2)];
+      if(strlen(s) <= strlen(buff2))
+        return;
+    }
+
+    tail = body;
+    col_count = 0;
+
+    while(*tail != '\0' && *tail != ')') {
+
+      while((*body == ' ' || *body == '(') && *body != '\0')
+        body++;
+
+      if(*body == '\0')
+        return;
+
+      tail = body;
+
+      while(*tail != ',' && *tail != ' ' && *tail != '\0' && *tail != ')')
+        tail++;
+
+      if(*tail == '\0')
+        return;
+
+      tk->cols[col_count] = (uint8_t*)malloc(tail - body + 1);
+      if(tk->cols[col_count] != NULL)
+        memset(tk->cols[col_count], 0, tail - body + 1);
+      else
+        exit(1);
+
+      strncpy(tk->cols[col_count], body, tail - body);
+      col_count++;
+
+      if(*tail == '\0' || *tail == '\)')
+        return;
+
+      tail++;
+      body = tail;
+    }
+    return;
+  }
+}

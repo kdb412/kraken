@@ -58,3 +58,4 @@ kraken.txt
 src/kraken.mk
 .DS_Store
 .vagrant
+*.swp
