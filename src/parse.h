@@ -53,3 +53,6 @@ krk_sql_token* krk_get_sql_token(char* s);
 int8_t krk_get_sql_mode(char* s);
 uint8_t krk_get_table_sql(char* s, krk_sql_token* tk);
 void krk_get_columns_sql(char* s, krk_sql_token* tk);
+uint8_t krk_get_column_type(uint8_t *s);
+
+

@@ -53,6 +53,8 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
 
   if(tk->mode == CREATE) {
     uint8_t type_field = 0;
+    uint8_t type_field_ret = 0;
+    uint8_t col_tspecifier[100] = {0};
     strcat(buff, "create table ");
     strcat(buff2, "create table ");
     if(strlen(tk->tblname) <= 0)
@@ -105,7 +107,13 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
 
               if(col_count < col_max) {
 
-
+                if(tail - body < 100)
+                {
+                  strncpy(&col_tspecifier[0], body, tail-body);
+                  type_field_ret = krk_get_column_type(col_tspecifier);
+                  if(type_field_ret)
+                    tk->col_typ[col_count] = type_field_ret;
+                }
                 body = tail;
                 type_field = 0;
                 col_count++;

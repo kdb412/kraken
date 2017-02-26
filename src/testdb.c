@@ -44,7 +44,7 @@ void runDBSysCommands()
 
   fprintf(stdout, "Test create table: ");
   if(!krk_createtb("  create    table    starwars_character  (name "
-                   "varchar(200), id int, evil bool)"))
+                   "varchar[200], id int, evil bool)"))
     fprintf(stdout, "P\n");
   else
     fprintf(stderr, "F\n");
