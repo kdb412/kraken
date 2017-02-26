@@ -35,6 +35,8 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
                 body = tail;
                 break;
               }
+              else
+                return;
             }
             if((*tail) == '\0')
               break;
@@ -96,17 +98,22 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
                 break;
               }
               else
-              {
-
-                if(col_count < col_max) {
-
-
-                  body = tail;
-                  type_field = 0;
-                  col_count++;
-                }
-              }
+                return;
             }
+            else
+            {
+
+              if(col_count < col_max) {
+
+
+                body = tail;
+                type_field = 0;
+                col_count++;
+              }
+              else
+                return;
+            }
+
           }
           if((*tail) == '\0')
             break;
@@ -164,6 +171,9 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
       if(*tail == '\0')
         return;
 
+      if(col_count > col_max-1)
+        return;
+
       tk->cols[col_count] = (uint8_t*)malloc(tail - body + 1);
       if(tk->cols[col_count] != NULL)
         memset(tk->cols[col_count], 0, tail - body + 1);
@@ -173,7 +183,7 @@ void krk_get_columns_sql(char* s, krk_sql_token* tk)
       strncpy(tk->cols[col_count], body, tail - body);
       col_count++;
 
-      if(*tail == '\0' || *tail == '\)')
+      if(*tail == '\0' || *tail == ')')
         return;
 
       tail++;
