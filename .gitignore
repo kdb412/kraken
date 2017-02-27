@@ -59,3 +59,4 @@ src/kraken.mk
 .DS_Store
 .vagrant
 *.swp
+*.workspace
