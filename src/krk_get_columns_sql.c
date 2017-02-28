@@ -91,12 +91,12 @@ void krk_get_columns_sql(char *s, krk_sql_token *tk)
 
     while (1)
     {
-      if ((*body) != ' ' && (*body) != '\0' && (*body) != ',')
+      if ((*body) != ' ' && (*body) != '\0' && (*body) != ',' && (*body) != ')')
       {
         tail = body;
         while (1)
         {
-          if (((*tail) == ',' || (*tail) == ' ') &&
+          if (((*tail) == ',' || (*tail) == ' ' || (*tail) == ')') &&
               strncmp(body, ")", strlen(")")))
           {
 
@@ -135,6 +135,7 @@ void krk_get_columns_sql(char *s, krk_sql_token *tk)
                 body = tail;
                 type_field = 0;
                 col_count++;
+                break;
               }
               else
                 return;
