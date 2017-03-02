@@ -26,6 +26,7 @@
       },
       "windows": {
         "MIMode": "gdb",
+         "miDebuggerPath": "C:\\TDM-GCC-64\\bin\\gdb.exe",
         "setupCommands": [
           {
             "description": "Enable pretty-printing for gdb",
@@ -56,6 +57,7 @@
       },
       "windows": {
         "MIMode": "gdb",
+        "miDebuggerPath": "C:\\TDM-GCC-64\\bin\\gdb.exe",
         "setupCommands": [
           {
             "description": "Enable pretty-printing for gdb",
