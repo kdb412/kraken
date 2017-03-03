@@ -109,10 +109,10 @@ echo -e "\n$SOURCE" >> CMakeLists.txt
 echo -e "\n#add_definitions(-DTESTDB)" >> CMakeLists.txt
 echo 'add_executable(kraken ${SOURCE_FILES})' >> CMakeLists.txt
 
-echo -e "\nif (WIN32)" >> CMakeLists.txt
-echo "    target_link_libraries(kraken wsock32 ws2_32)" >> CMakeLists.txt
+echo -e "\nif (MINGW)" >> CMakeLists.txt
+echo "    target_link_libraries(kraken pthread ws2_32)" >> CMakeLists.txt
 echo "else()" >> CMakeLists.txt
 echo "    target_link_libraries(kraken pthread pthread)" >> CMakeLists.txt
-echo "endif (WIN32)" >> CMakeLists.txt
+echo "endif (MINGW)" >> CMakeLists.txt
 
 
