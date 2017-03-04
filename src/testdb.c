@@ -10,7 +10,6 @@ void runDBTests()
 
   runTableNameQueryTests();
   runDBSysCommands();
-
 #endif
 }
 
@@ -21,11 +20,15 @@ void runDBSysCommands()
   fprintf(stdout, "Test create db: ");
   fflush(stdout);
   if (!krk_createdb("testdb"))
+  {
     fprintf(stdout, "P\n");
+    fflush(stdout);
+  }
   else
+  {
     fprintf(stderr, "F\n");
-  fflush(stderr);
-  fflush(stdout);
+    fflush(stderr);
+  }
 
   fprintf(stdout, "Test mount db: ");
   if (!krk_mountdb("testdb"))
@@ -36,21 +39,31 @@ void runDBSysCommands()
   fflush(stderr);
 
   fprintf(stdout, "Test add user: ");
-  if (!krk_create_user("testuser", "pass"))
-    fprintf(stdout, "P\n");
-  else
-    fprintf(stderr, "F\n");
   fflush(stdout);
-  fflush(stderr);
+  if (!krk_create_user("testuser", "pass"))
+  {
+    fprintf(stdout, "P\n");
+    fflush(stdout);
+  }
+  else
+  {
+    fprintf(stderr, "F\n");
+    fflush(stderr);
+  }
 
   fprintf(stdout, "Test create table: ");
+  fflush(stdout);
   if (!krk_createtb("  create    table    starwars_character  (name "
                     "varchar[200], id int, evil bool)"))
+  {
     fprintf(stdout, "P\n");
+    fflush(stdout);
+  }
   else
+  {
     fprintf(stderr, "F\n");
-  fflush(stdout);
-  fflush(stderr);
+    fflush(stderr);
+  }
 
   fprintf(stdout, "Test unmount db: ");
   fflush(stdout);
